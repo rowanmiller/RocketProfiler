@@ -5,7 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <TextBlock Text="Rocket Profiler" />
-    </Grid>
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0">Run Name</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Name="RunName" />
+            <Label Grid.Row="1" Grid.Column="0">Description</Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="RunDescription" />
+            <Button  Grid.Row="2" Grid.Column="0" Name="StartButton" Click="StartButton_Click">Start Run</Button>
+            <Button  Grid.Row="2" Grid.Column="1" Name="StopButton" Click="StopButton_Click" IsEnabled="False">Stop Run</Button>
+        </Grid>
+        <Grid Name="SensorGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+    </StackPanel>
+
 </Window>

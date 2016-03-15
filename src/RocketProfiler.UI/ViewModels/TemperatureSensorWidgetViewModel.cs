@@ -1,11 +1,8 @@
-﻿using RocketProfiler.Controller;
-using System;
-using System.Collections.Generic;
+﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+using RocketProfiler.Controller;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RocketProfiler.UI.ViewModels
 {
