@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="ControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RampingTemperatureSensor.cs" />
+    <Compile Include="TestTemperatureSensor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

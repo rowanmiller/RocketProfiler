@@ -14,8 +14,8 @@ namespace RocketProfiler.Controller
             get { return _value; }
             set
             {
-                OnPropertyChanged();
                 _value = value;
+                OnPropertyChanged();
             }
         }
 

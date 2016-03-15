@@ -10,9 +10,11 @@ namespace RocketProfiler.Controller
     {
         private readonly IList<Sensor> _sensors;
         private Runner _runner;
+        private readonly int _pollingInterval;
 
-        public RunController(IList<Sensor> sensors)
+        public RunController(IList<Sensor> sensors, int pollingInterval)
         {
+            _pollingInterval = pollingInterval;
             _sensors = sensors;
         }
 
@@ -29,7 +31,7 @@ namespace RocketProfiler.Controller
                 StartTime = DateTime.UtcNow
             };
 
-            _runner = new Runner(LastRun, _sensors);
+            _runner = new Runner(LastRun, _sensors, _pollingInterval);
 
             _runner.Start();
         }

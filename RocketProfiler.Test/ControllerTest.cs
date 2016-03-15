@@ -1,8 +1,7 @@
 ﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using RocketProfiler.Controller;
 using Xunit;
@@ -16,61 +15,19 @@ namespace RocketProfiler.Test
         {
             var sensor = new RampingTemperatureSensor("Sensor1");
 
-            var controller = new RunController(new Sensor[] { sensor });
+            var readValues = new List<SensorValue>();
+            sensor.LastRead.PropertyChanged += (s, e) => { readValues.Add(((CurrentSensorValue)s).Value); };
+
+            var controller = new RunController(new Sensor[] { sensor }, 10);
 
             controller.StartRecoding("TestRun", "A test run.");
-        }
-    }
+            Thread.Sleep(200);
+            controller.StopRecording();
 
-    public class TestTemperatureSensor : Sensor
-    {
-        private readonly IList<int> _values;
-        private int _index = -1;
+            Assert.True(readValues.Count >= 5);
 
-        public TestTemperatureSensor(string name, IList<int> values)
-        {
-            _values = values;
-            Name = name;
-        }
-
-        public override SensorValue ReadValue() 
-            => new TemperatureSensorValue
-        {
-            Sensor = this,
-            Temperature = _values[_index = (_index + 1) % _values.Count],
-            Timestamp = DateTime.UtcNow
-        };
-
-        public override SensorValue DoRead()
-            => new TemperatureSensorValue
-            {
-                Sensor = this,
-                Temperature = _values[_index = (_index + 1) % _values.Count],
-                Timestamp = DateTime.UtcNow
-            };
-    }
-
-    public class RampingTemperatureSensor : TestTemperatureSensor
-    {
-        public RampingTemperatureSensor(string name)
-            : base(name, CreateValues())
-        {
-        }
-
-        private static IList<int> CreateValues()
-        {
-            var values = new List<int>();
-
-            for (var i = 0; i < 1000; i += 10)
-            {
-                values.Add(i);
-            }
-            for (var i = 1000; i >= 0; i -= 10)
-            {
-                values.Add(i);
-            }
-
-            return values;
+            Assert.Equal(new List<int> { 0, 10, 20, 30, 40 },
+                readValues.Take(5).Select(v => ((TemperatureSensorValue)v).Temperature));
         }
     }
 }
