@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using RocketProfiler.Controller;
 
-namespace RocketProfiler.Test
+namespace RocketProfiler.Controller.TestSensors
 {
     public class RampingTemperatureSensor : TestTemperatureSensor
     {

@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using RocketProfiler.Controller;
+using System.Linq;
 
-namespace RocketProfiler.Test
+namespace RocketProfiler.Controller.TestSensors
 {
     public class TestTemperatureSensor : Sensor
     {
@@ -20,6 +20,10 @@ namespace RocketProfiler.Test
             Name = name;
         }
 
+        public override string Units { get; } = "Test Units";
+
+        public override double MaxValue => _values.Max() * 2;
+
         public override SensorValue DoRead()
         {
             if (_sleep != null)
@@ -27,10 +31,10 @@ namespace RocketProfiler.Test
                 Thread.Sleep(_sleep.Value);
             }
 
-            return new TemperatureSensorValue
+            return new SensorValue
             {
                 Sensor = this,
-                Temperature = _values[_index = (_index + 1) % _values.Count],
+                Value = _values[_index = (_index + 1) % _values.Count],
                 Timestamp = DateTime.UtcNow
             };
         }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using RocketProfiler.Controller;
 using Xunit;
+using RocketProfiler.Controller.TestSensors;
 
 namespace RocketProfiler.Test
 {
@@ -30,8 +31,8 @@ namespace RocketProfiler.Test
 
                 Assert.InRange(readValues.Count, 5, 15);
 
-                Assert.Equal(new List<int> { 0, 10, 20, 30, 40 },
-                    readValues.Take(5).Select(v => ((TemperatureSensorValue)v).Temperature).ToList());
+                Assert.Equal(new List<double> { 0, 10, 20, 30, 40 },
+                    readValues.Take(5).Select(v => v.Value).ToList());
             }
         }
 

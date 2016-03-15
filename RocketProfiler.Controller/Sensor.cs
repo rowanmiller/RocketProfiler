@@ -6,6 +6,8 @@ namespace RocketProfiler.Controller
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public abstract string Units { get; }
+        public abstract double MaxValue { get; }
 
         public virtual SensorValue ReadValue()
         {
