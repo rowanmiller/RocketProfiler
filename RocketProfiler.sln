@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25114.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9F647914-F928-475C-B739-BD5B08C613D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketProfiler.UI", "src\RocketProfiler.UI\RocketProfiler.UI.csproj", "{799816F4-872F-4BB5-9522-946C6CD9FBDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketProfiler.Controller", "RocketProfiler.Controller\RocketProfiler.Controller.csproj", "{549DDEE1-78E5-4D35-A422-5D59F9E79CA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,11 +19,16 @@ Global
 		{799816F4-872F-4BB5-9522-946C6CD9FBDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{799816F4-872F-4BB5-9522-946C6CD9FBDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{799816F4-872F-4BB5-9522-946C6CD9FBDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{549DDEE1-78E5-4D35-A422-5D59F9E79CA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{549DDEE1-78E5-4D35-A422-5D59F9E79CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{549DDEE1-78E5-4D35-A422-5D59F9E79CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{549DDEE1-78E5-4D35-A422-5D59F9E79CA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{799816F4-872F-4BB5-9522-946C6CD9FBDF} = {9F647914-F928-475C-B739-BD5B08C613D8}
+		{549DDEE1-78E5-4D35-A422-5D59F9E79CA7} = {9F647914-F928-475C-B739-BD5B08C613D8}
 	EndGlobalSection
 EndGlobal
