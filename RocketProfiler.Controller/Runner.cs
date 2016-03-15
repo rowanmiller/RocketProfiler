@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace RocketProfiler.Controller
 {
-    public class Runner
+    public class Runner : IDisposable
     {
         private readonly int _pollingInterval;
         private readonly object _lock = new object();
@@ -16,6 +16,7 @@ namespace RocketProfiler.Controller
         private DateTime _startedAt;
         private int _count;
         private bool _stopped;
+        private bool _sampling;
 
         public Runner(Run run, IList<Sensor> sensors, int pollingInterval)
         {
@@ -33,10 +34,20 @@ namespace RocketProfiler.Controller
 
         public void Stop()
         {
-            lock (_lock)
+            while (true)
             {
-                _stopped = true;
-                _timer.Dispose();
+                lock (_lock)
+                {
+                    _stopped = true;
+                    _timer.Change(Timeout.Infinite, Timeout.Infinite);
+
+                    if (!_sampling)
+                    {
+                        return;
+                    }
+                }
+
+                Thread.Sleep(10);
             }
         }
 
@@ -49,18 +60,37 @@ namespace RocketProfiler.Controller
                     return;
                 }
 
-                var fireAtNext = (_startedAt + TimeSpan.FromMilliseconds(++_count * _pollingInterval)).Subtract(DateTime.UtcNow);
-                _timer.Change((int)fireAtNext.TotalMilliseconds, -1);
+                var fireAtNext = Math.Max(
+                    0,
+                    (int)(_startedAt + TimeSpan.FromMilliseconds(++_count * _pollingInterval))
+                        .Subtract(DateTime.UtcNow)
+                        .TotalMilliseconds);
 
-                var snapshot = new Snapshot { Run = _run, Timestamp = DateTime.UtcNow };
+                _timer.Change(fireAtNext, Timeout.Infinite);
 
-                foreach (var sensor in _sensors)
+                if (_sampling)
                 {
-                    snapshot.SensorValues.Add(sensor.ReadValue());
+                    return;
                 }
 
-                _run.Snapshots.Add(snapshot);
+                _sampling = true;
+            }
+
+            var snapshot = new Snapshot { Run = _run, Timestamp = DateTime.UtcNow };
+
+            foreach (var sensor in _sensors)
+            {
+                snapshot.SensorValues.Add(sensor.ReadValue());
+            }
+
+            _run.Snapshots.Add(snapshot);
+
+            lock (_lock)
+            {
+                _sampling = false;
             }
         }
+
+        public void Dispose() => _timer.Dispose();
     }
 }

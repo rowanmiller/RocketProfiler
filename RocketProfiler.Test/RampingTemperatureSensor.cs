@@ -6,8 +6,8 @@ namespace RocketProfiler.Test
 {
     public class RampingTemperatureSensor : TestTemperatureSensor
     {
-        public RampingTemperatureSensor(string name)
-            : base(name, CreateValues())
+        public RampingTemperatureSensor(string name, int? sleep = null)
+            : base(name, CreateValues(), sleep)
         {
         }
 
