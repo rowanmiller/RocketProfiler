@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace RocketProfiler.Controller
 {
-    public abstract class CurrentSensorValue : INotifyPropertyChanged
+    public class CurrentSensorValue : INotifyPropertyChanged
     {
         private SensorValue _value;
 

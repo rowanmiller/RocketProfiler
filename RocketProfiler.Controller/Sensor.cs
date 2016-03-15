@@ -7,8 +7,14 @@ namespace RocketProfiler.Controller
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public abstract SensorValue ReadValue();
+        public virtual SensorValue ReadValue()
+        {
+            LastRead.Value = DoRead();
+            return LastRead.Value;
+        }
 
-        public virtual CurrentSensorValue LastRead { get; set; }
+        public abstract SensorValue DoRead();
+
+        public CurrentSensorValue LastRead { get; } = new CurrentSensorValue();
     }
 }
