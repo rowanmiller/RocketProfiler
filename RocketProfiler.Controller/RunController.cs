@@ -3,44 +3,38 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace RocketProfiler.Controller
 {
-    public class RunController : IRunController
+    public class RunController : IDisposable
     {
         private readonly IList<Sensor> _sensors;
-        private Runner _runner;
-        private readonly int _pollingInterval;
+        private readonly Runner _runner;
+        private readonly IList<Run> _runs = new List<Run>();
 
         public RunController(IList<Sensor> sensors, int pollingInterval)
         {
-            _pollingInterval = pollingInterval;
             _sensors = sensors;
+            _runner = new Runner(_sensors, pollingInterval);
         }
 
-        public virtual Run LastRun { get; private set; }
+        public virtual Run LastRun => _runs.LastOrDefault();
 
         public virtual void StartRecoding(string runName, string runDescription)
         {
-            Debug.Assert(_runner == null);
-
-            LastRun = new Run
+            var run = new Run
             {
                 Name = runName,
                 Description = runDescription,
                 StartTime = DateTime.UtcNow
             };
 
-            _runner = new Runner(LastRun, _sensors, _pollingInterval);
-
-            _runner.Start();
+            _runs.Add(run);
+            _runner.RecordRun(run);
         }
 
-        public virtual void StopRecording()
-        {
-            _runner?.Stop();
-            _runner = null;
-        }
+        public virtual void StopRecording() => _runner.EndRun();
 
         public virtual void PersistLastRun()
         {
@@ -48,5 +42,7 @@ namespace RocketProfiler.Controller
 
             //TODO
         }
+
+        public void Dispose() => _runner.Dispose();
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using RocketProfiler.Controller;
 
 namespace RocketProfiler.Test
 {
@@ -25,6 +26,14 @@ namespace RocketProfiler.Test
             }
 
             return values;
+        }
+
+        public static RampingTemperatureSensor Create(ICollection<SensorValue> readValues, string name, int? sleep = null)
+        {
+            var sensor = new RampingTemperatureSensor(name, sleep);
+
+            sensor.LastRead.PropertyChanged += (s, e) => { readValues.Add(((CurrentSensorValue)s).Value); };
+            return sensor;
         }
     }
 }

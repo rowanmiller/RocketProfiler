@@ -10,44 +10,36 @@ namespace RocketProfiler.Controller
     {
         private readonly int _pollingInterval;
         private readonly object _lock = new object();
-        private readonly Run _run;
         private readonly IList<Sensor> _sensors;
         private readonly Timer _timer;
-        private DateTime _startedAt;
+        private readonly DateTime _startedAt;
         private int _count;
         private bool _stopped;
         private bool _sampling;
 
-        public Runner(Run run, IList<Sensor> sensors, int pollingInterval)
+        private Run _run;
+
+        public Runner(IList<Sensor> sensors, int pollingInterval)
         {
-            _run = run;
             _sensors = sensors;
-            _timer = new Timer(_ => SampleSensors(), null, Timeout.Infinite, Timeout.Infinite);
+            _startedAt = DateTime.UtcNow;
+            _timer = new Timer(_ => SampleSensors(), null, 0, Timeout.Infinite);
             _pollingInterval = pollingInterval;
         }
 
-        public void Start()
+        public void RecordRun(Run run)
         {
-            _startedAt = DateTime.UtcNow;
-            _timer.Change(0, Timeout.Infinite);
+            lock (_lock)
+            {
+                _run = run;
+            }
         }
 
-        public void Stop()
+        public void EndRun()
         {
-            while (true)
+            lock (_lock)
             {
-                lock (_lock)
-                {
-                    _stopped = true;
-                    _timer.Change(Timeout.Infinite, Timeout.Infinite);
-
-                    if (!_sampling)
-                    {
-                        return;
-                    }
-                }
-
-                Thread.Sleep(10);
+                _run = null;
             }
         }
 
@@ -83,14 +75,23 @@ namespace RocketProfiler.Controller
                 snapshot.SensorValues.Add(sensor.ReadValue());
             }
 
-            _run.Snapshots.Add(snapshot);
-
             lock (_lock)
             {
+                if (!_stopped)
+                {
+                    _run?.Snapshots.Add(snapshot);
+                }
                 _sampling = false;
             }
         }
 
-        public void Dispose() => _timer.Dispose();
+        public void Dispose()
+        {
+            lock (_lock)
+            {
+                _stopped = true;
+                _timer.Dispose();
+            }
+        }
     }
 }
