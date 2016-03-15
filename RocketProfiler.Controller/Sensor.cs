@@ -8,5 +8,7 @@ namespace RocketProfiler.Controller
         public string Name { get; set; }
 
         public abstract SensorValue ReadValue();
+
+        public virtual CurrentSensorValue LastRead { get; set; }
     }
 }

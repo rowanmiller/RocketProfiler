@@ -48,7 +48,6 @@ namespace RocketProfiler.Controller
                 }
 
                 var fireAtNext = (_startedAt + TimeSpan.FromMilliseconds(++_count * 100)).Subtract(DateTime.UtcNow);
-                Console.WriteLine(fireAtNext);
                 _timer.Change((int)fireAtNext.TotalMilliseconds, -1);
 
                 var snapshot = new Snapshot { Run = _run, Timestamp = DateTime.UtcNow };

@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketProfiler.UI", "src\Ro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketProfiler.Controller", "RocketProfiler.Controller\RocketProfiler.Controller.csproj", "{549DDEE1-78E5-4D35-A422-5D59F9E79CA7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CAB551FF-05BF-4359-957E-95E4038F6009}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketProfiler.Test", "RocketProfiler.Test\RocketProfiler.Test.csproj", "{930301A4-7B94-418A-BAC0-D6098D39FE27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +27,10 @@ Global
 		{549DDEE1-78E5-4D35-A422-5D59F9E79CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{549DDEE1-78E5-4D35-A422-5D59F9E79CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{549DDEE1-78E5-4D35-A422-5D59F9E79CA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{930301A4-7B94-418A-BAC0-D6098D39FE27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{930301A4-7B94-418A-BAC0-D6098D39FE27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{930301A4-7B94-418A-BAC0-D6098D39FE27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{930301A4-7B94-418A-BAC0-D6098D39FE27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,5 +38,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{799816F4-872F-4BB5-9522-946C6CD9FBDF} = {9F647914-F928-475C-B739-BD5B08C613D8}
 		{549DDEE1-78E5-4D35-A422-5D59F9E79CA7} = {9F647914-F928-475C-B739-BD5B08C613D8}
+		{930301A4-7B94-418A-BAC0-D6098D39FE27} = {CAB551FF-05BF-4359-957E-95E4038F6009}
 	EndGlobalSection
 EndGlobal
