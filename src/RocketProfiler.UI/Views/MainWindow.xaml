@@ -6,6 +6,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <TextBlock Text ="Rocket Profiler"/>
+        <TextBlock Text="Rocket Profiler" />
     </Grid>
 </Window>
