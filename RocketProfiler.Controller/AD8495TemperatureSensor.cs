@@ -44,6 +44,7 @@ namespace RocketProfiler.Controller
 
                 return new SensorValue
                 {
+                    Sensor = this,
                     Value = temperature,
                     Timestamp = time
                 };
@@ -52,6 +53,7 @@ namespace RocketProfiler.Controller
             {
                 return new ErrorSensorValue
                 {
+                    Sensor = this,
                     Timestamp = time,
                     ErrorMessage = $"I/O Failure: {ex.GetType()} {ex.Message}",
                     Value = null

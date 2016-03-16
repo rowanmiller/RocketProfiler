@@ -26,7 +26,6 @@ namespace RocketProfiler.UI.ViewModels
                 var plotViewModel = new SensorPlotWidgetViewModel(sensor, RunController);
 
                 var plot = new Plot();
-                plot.Title = sensor.Name;
                 plot.Series.Add(
                     new LineSeries
                     {

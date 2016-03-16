@@ -39,6 +39,7 @@ namespace RocketProfiler.UI.Views
             _mainWindowViewModel.RunController.StartRecoding(RunName.Text, RunDescription.Text);
             StartButton.IsEnabled = false;
             StopButton.IsEnabled = true;
+            Inputs.IsEnabled = false;
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
@@ -46,6 +47,7 @@ namespace RocketProfiler.UI.Views
             _mainWindowViewModel.RunController.StopRecording();
             StartButton.IsEnabled = true;
             StopButton.IsEnabled = false;
+            Inputs.IsEnabled = true;
         }
     }
 }

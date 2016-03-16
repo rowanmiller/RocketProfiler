@@ -6,6 +6,7 @@ using RocketProfiler.Controller;
 using RocketProfiler.Controller.TestSensors;
 using RocketProfiler.UI.ViewModels;
 using RocketProfiler.UI.Views;
+using System.IO.Ports;
 
 namespace RocketProfiler.UI
 {
@@ -17,18 +18,37 @@ namespace RocketProfiler.UI
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
 
-            var sensors = new List<Sensor>
-            {
-                new TestTemperatureSensor("Fuel Nozzle Temp", new List<int> { 0, 10, 20, 30, 40 }),
-                new TestTemperatureSensor("Burner Temp", new List<int> { 500, 503, 600, 789, 450 }),
-            };
+            var sensors = GetTestSensors();
 
             var window = new MainWindow(
                 new MainWindowViewModel(
                     sensors,
-                    new RunController(sensors, 200)));
+                    new RunController(sensors, 300)));
 
             window.Show();
+        }
+
+        private static List<Sensor> GetRealSensors()
+        {
+            var numatoPort = new SerialPort();
+            numatoPort.PortName = "COM4";
+            numatoPort.BaudRate = 9600;
+            numatoPort.Open();
+
+            return new List<Sensor>
+            {
+                 new AD8495TemperatureSensor("Oxidizer Inlet Temp", numatoPort, 0),
+                 new MAX6675TemperatureSensor("Lower Engine Temp", numatoPort, 1, 2, 3)
+            };
+        }
+
+        private static List<Sensor> GetTestSensors()
+        {
+            return new List<Sensor>
+            {
+                new TestTemperatureSensor("Oxidizer Inlet Temp", new List<int> { 70, 75, 80, 85, 75 }),
+                new RampingTemperatureSensor("Lower Engine Temp")
+            };
         }
     }
 }

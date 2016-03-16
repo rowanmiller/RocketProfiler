@@ -23,7 +23,7 @@ namespace RocketProfiler.UI.ViewModels
             _runController = runController;
 
             var timer = new Timer();
-            timer.Interval = 1000;
+            timer.Interval = 300;
             timer.Elapsed += RedrawGraph;
             timer.Start();
 
