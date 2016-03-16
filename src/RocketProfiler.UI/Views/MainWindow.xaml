@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        WindowState="Maximized"
         Title="MainWindow" Height="600" Width="800">
     <StackPanel>
         <Border CornerRadius="5" Background="Black" Padding="5">
@@ -29,6 +30,8 @@
                     <Button Width="150" Height="150" Background="Green" Name="StartButton" Click="StartButton_Click">Start Run</Button>
                     <Button Width="150" Height="150" Background="OrangeRed" Name="StopButton" Click="StopButton_Click" IsEnabled="False">Stop Run</Button>
                 </StackPanel>
+
+                <TextBlock Margin="5" VerticalAlignment="Center" Text="{Binding TimerText, Mode=OneWay}" Foreground="White" FontSize="90" />
             </StackPanel>
         </Border>
 
