@@ -34,18 +34,24 @@ namespace RocketProfiler.UI.ViewModels
         {
             _dataPoints.Clear();
 
-            _dataPoints.AddRange(
-                _runController
-                    ?.CurrentRun
-                    ?.Snapshots
-                    ?.Select(s => s.SensorValues.Single(sv => sv.Sensor.Name == _sensor.Name))
-                    ?.Where(v => v.Value.HasValue)
-                    ?.Select(v =>
-                        new DataPoint(
-                            DateTimeAxis.ToDouble(v.Timestamp),
-                        v.Value.Value)) ?? new DataPoint[0]);
+            if (_runController.CurrentRun != null)
+            {
+                var startTime = _runController.CurrentRun.StartTime;
 
-            OnPropertyChanged(nameof(DataPoints));
+                _dataPoints.AddRange(
+                    _runController
+                        .CurrentRun
+                        .Snapshots
+                        .ToList()
+                        .Select(s => s.SensorValues.Single(sv => sv.Sensor.Name == _sensor.Name))
+                        .Where(v => v.Value.HasValue)
+                        .Select(v =>
+                            new DataPoint(
+                                TimeSpanAxis.ToDouble(v.Timestamp - startTime),
+                                v.Value.Value)));
+
+                OnPropertyChanged(nameof(DataPoints));
+            }
         }
 
         public IList<DataPoint> DataPoints => _dataPoints;

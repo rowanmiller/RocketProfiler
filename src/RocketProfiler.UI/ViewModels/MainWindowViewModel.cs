@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Windows.Controls;
+using OxyPlot.Axes;
 using OxyPlot.Wpf;
 using RocketProfiler.Controller;
 using RocketProfiler.UI.Views;
@@ -32,6 +33,11 @@ namespace RocketProfiler.UI.ViewModels
                 var plotViewModel = new SensorPlotWidgetViewModel(sensor, RunController);
 
                 var plot = new Plot();
+                plot.Axes.Add(new OxyPlot.Wpf.TimeSpanAxis
+                {
+                    Position = AxisPosition.Bottom,
+                    StringFormat = "mm:ss"
+                });
                 plot.Series.Add(
                     new LineSeries
                     {
