@@ -3,6 +3,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using RocketProfiler.UI.ViewModels;
+using Microsoft.Win32;
 
 namespace RocketProfiler.UI.Views
 {
@@ -48,6 +49,22 @@ namespace RocketProfiler.UI.Views
             StartButton.IsEnabled = true;
             StopButton.IsEnabled = false;
             Inputs.IsEnabled = true;
+        }
+
+        private void SelectSessionButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new SaveFileDialog
+            {
+                FileName = "MySession",
+                DefaultExt = ".rocket",
+                Filter = "RocketProfiler Sessions (.rocket)|*.rocket",
+            };
+
+            var result = dlg.ShowDialog();
+            if(result.HasValue && result.Value)
+            {
+                _mainWindowViewModel.SessionFilePath = dlg.FileName;
+            }
         }
     }
 }

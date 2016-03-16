@@ -22,8 +22,8 @@ namespace RocketProfiler.Controller
         private List<Type> GetSensorTypes() 
             => _sensors.Select(e => e.GetType()).Distinct().ToList();
 
-        public virtual string DatabaseName { get; }
-            = ("RocketProfiler_" + DateTime.Now + ".sqlite").Replace('/', '_').Replace(' ', '_').Replace(':', '_');
+        public virtual string DatabaseName { get; set; }
+            = ("RocketProfiler_" + DateTime.Now + ".rocket").Replace('/', '_').Replace(' ', '_').Replace(':', '_');
 
         public virtual Run CurrentRun { get; private set; }
 

@@ -72,6 +72,7 @@ namespace RocketProfiler.UI.ViewModels
         public void StopRun()
         {
             RunController.StopRecording();
+            RunController.PersistRuns();
             _runTimer.Stop();
         }
 
@@ -88,6 +89,16 @@ namespace RocketProfiler.UI.ViewModels
                 return RunController.CurrentRun == null
                     ? "0:00:00.0"
                     : (DateTime.UtcNow - RunController.CurrentRun.StartTime).ToString("g").Substring(0, 9);
+            }
+        }
+
+        public string SessionFilePath
+        {
+            get { return RunController.DatabaseName; }
+            set
+            {
+                RunController.DatabaseName = value;
+                OnPropertyChanged();
             }
         }
 

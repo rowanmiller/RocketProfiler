@@ -17,13 +17,21 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Foreground="White" FontSize="16">Run Name</Label>
-                    <TextBox Grid.Row="0" Grid.Column="1" Name="RunName" FontSize="16" />
-                    <Label Grid.Row="1" Grid.Column="0" Foreground="White" FontSize="16">Description</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Name="RunDescription" FontSize="16" AcceptsReturn="True" />
+                    <Label Width="105" Grid.Row="0" Grid.Column="0" Foreground="White" FontSize="16">Session</Label>
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Width="380" Text="{Binding SessionFilePath, Mode=TwoWay}" FontSize="16" />
+                        <Button Click="SelectSessionButton_Click" Width="20">...</Button>
+                    </StackPanel>
+
+
+                    <Label Grid.Row="1" Grid.Column="0" Foreground="White" FontSize="16">Run Name</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Name="RunName" FontSize="16" />
+                    <Label Grid.Row="2" Grid.Column="0" Foreground="White" FontSize="16">Description</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="RunDescription" FontSize="16" AcceptsReturn="True" />
                 </Grid>
 
                 <StackPanel Orientation="Horizontal" Margin="5">
