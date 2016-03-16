@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         WindowState="Maximized"
-        Title="MainWindow" Height="600" Width="800">
+        Title="Rocket Profiler" Height="600" Width="800">
     <StackPanel>
         <Border CornerRadius="5" Background="Black" Padding="5">
             <StackPanel Orientation="Horizontal">
