@@ -12,6 +12,6 @@ namespace RocketProfiler.Controller
         public string Description { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public ICollection<Snapshot> Snapshots { get; } = new List<Snapshot>();
+        public IList<Snapshot> Snapshots { get; } = new List<Snapshot>();
     }
 }

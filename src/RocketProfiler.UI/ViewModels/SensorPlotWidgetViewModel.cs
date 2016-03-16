@@ -36,7 +36,7 @@ namespace RocketProfiler.UI.ViewModels
 
             _dataPoints.AddRange(
                 _runController
-                    ?.LastRun
+                    ?.CurrentRun
                     ?.Snapshots
                     ?.Select(s => s.SensorValues.Single(sv => sv.Sensor.Name == _sensor.Name))
                     ?.Where(v => v.Value.HasValue)

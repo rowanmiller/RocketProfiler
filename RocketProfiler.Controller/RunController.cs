@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace RocketProfiler.Controller
@@ -11,7 +10,8 @@ namespace RocketProfiler.Controller
     {
         private readonly IList<Sensor> _sensors;
         private readonly Runner _runner;
-        private readonly IList<Run> _runs = new List<Run>();
+        private readonly IList<Run> _collectedRuns = new List<Run>();
+        private bool _initialized;
 
         public RunController(IList<Sensor> sensors, int pollingInterval)
         {
@@ -19,28 +19,59 @@ namespace RocketProfiler.Controller
             _runner = new Runner(_sensors, pollingInterval);
         }
 
-        public virtual Run LastRun => _runs.LastOrDefault();
+        private List<Type> GetSensorTypes() 
+            => _sensors.Select(e => e.GetType()).Distinct().ToList();
+
+        public virtual string DatabaseName { get; }
+            = ("RocketProfiler_" + DateTime.Now + ".sqlite").Replace('/', '_').Replace(' ', '_').Replace(':', '_');
+
+        public virtual Run CurrentRun { get; private set; }
 
         public virtual void StartRecoding(string runName, string runDescription)
-        {
-            var run = new Run
+            => _runner.RecordRun(CurrentRun = new Run
             {
                 Name = runName,
                 Description = runDescription,
                 StartTime = DateTime.UtcNow
-            };
+            });
 
-            _runs.Add(run);
-            _runner.RecordRun(run);
+        public virtual void StopRecording()
+        {
+            CurrentRun.EndTime = DateTime.UtcNow;
+
+            _runner.EndRun();
+
+            _collectedRuns.Add(CurrentRun);
         }
 
-        public virtual void StopRecording() => _runner.EndRun();
-
-        public virtual void PersistLastRun()
+        public virtual void PersistRuns()
         {
-            Debug.Assert(LastRun != null);
+            InitializeDatabase();
 
-            //TODO
+            using (var context = new RocketProfilerContext(DatabaseName, GetSensorTypes()))
+            {
+                context.AttachRange(_sensors);
+                context.AddRange(_collectedRuns);
+                context.SaveChanges();
+                _collectedRuns.Clear();
+            }
+        }
+
+        private void InitializeDatabase()
+        {
+            if (!_initialized)
+            {
+                using (var context = new RocketProfilerContext(DatabaseName, GetSensorTypes()))
+                {
+                    context.Database.EnsureCreated();
+
+                    context.AddRange(_sensors);
+
+                    context.SaveChanges();
+                }
+
+                _initialized = true;
+            }
         }
 
         public void Dispose() => _runner.Dispose();

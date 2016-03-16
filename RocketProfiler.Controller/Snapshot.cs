@@ -11,6 +11,6 @@ namespace RocketProfiler.Controller
         public int RunId { get; set; }
         public Run Run { get; set; }
         public DateTime Timestamp { get; set; }
-        public ICollection<SensorValue> SensorValues { get; } = new List<SensorValue>();
+        public IList<SensorValue> SensorValues { get; } = new List<SensorValue>();
     }
 }
