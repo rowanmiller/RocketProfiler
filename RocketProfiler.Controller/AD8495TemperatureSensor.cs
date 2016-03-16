@@ -22,8 +22,9 @@ namespace RocketProfiler.Controller
         ///     Output from the AD8945 (input to the microcontroller) which sets a voltage to indicate the current temperature.
         ///     Pin is labeled OUT on hardware. 
         /// </param>
-        public AD8495TemperatureSensor(SerialPort port, int pin)
+        public AD8495TemperatureSensor(string name, SerialPort port, int pin)
         {
+            Name = name;
             _port = port;
             _pin = pin;
         }
@@ -36,14 +37,26 @@ namespace RocketProfiler.Controller
         {
             // Temperature (°C) = (volts - 1.25) / 5mv
             var time = DateTime.Now;
-            double volts = _port.ReadAnalogPin(_pin);
-            var temperature = (volts - 1.25) / 0.005;
-
-            return new SensorValue
+            try
             {
-                Value = temperature,
-                Timestamp = time
-            };
+                double volts = _port.ReadAnalogPin(_pin);
+                var temperature = (volts - 1.25) / 0.005;
+
+                return new SensorValue
+                {
+                    Value = temperature,
+                    Timestamp = time
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ErrorSensorValue
+                {
+                    Timestamp = time,
+                    ErrorMessage = $"I/O Failure: {ex.GetType()} {ex.Message}",
+                    Value = null
+                };
+            }
         }
     }
 }

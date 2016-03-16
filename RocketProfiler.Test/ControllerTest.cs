@@ -31,7 +31,7 @@ namespace RocketProfiler.Test
 
                 Assert.InRange(readValues.Count, 5, 15);
 
-                Assert.Equal(new List<double> { 0, 10, 20, 30, 40 },
+                Assert.Equal(new List<double?> { 0, 10, 20, 30, 40 },
                     readValues.Take(5).Select(v => v.Value).ToList());
             }
         }

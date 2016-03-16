@@ -33,8 +33,9 @@ namespace RocketProfiler.Controller
         ///     Output from the MAX6675 (input to the microcontroller) which carries each bit of data.
         ///     Pin is labeled 90 on hardware. 
         /// </param>
-        public MAX6675TemperatureSensor(SerialPort port, int clockPin, int chipSelectPin, int dataOutputPin)
+        public MAX6675TemperatureSensor(string name, SerialPort port, int clockPin, int chipSelectPin, int dataOutputPin)
         {
+            Name = name;
             _port = port;
             _clockPin = clockPin;
             _chipSelectPin = chipSelectPin;
@@ -48,26 +49,43 @@ namespace RocketProfiler.Controller
         public override SensorValue DoRead()
         {
             var time = DateTime.Now;
-            _port.SetPin(_chipSelectPin, 0);
-            int result = ReadTwoBytes();
-            _port.SetPin(_chipSelectPin, 1);
-
-            // Three lest significant bits are flags and not part of reading
-            // Third least significant flags that thermocouple is detached
-            if ((result & 4) != 0)
+            try
             {
-                throw new Exception("Thermocouple not attached");
+                _port.SetPin(_chipSelectPin, 0);
+                int result = ReadTwoBytes();
+                _port.SetPin(_chipSelectPin, 1);
+
+                // Three lest significant bits are flags and not part of reading
+                // Third least significant flags that thermocouple is detached
+                if ((result & 4) != 0)
+                {
+                    return new ErrorSensorValue
+                    {
+                        Timestamp = time,
+                        ErrorMessage = "Thermocouple not attached",
+                        Value = null
+                    };
+                }
+
+                // Discard the flag bits and calcuate result
+                result >>= 3;
+                var temperature = result * 0.25;
+
+                return new SensorValue
+                {
+                    Value = temperature,
+                    Timestamp = time
+                };
             }
-
-            // Discard the flag bits and calcuate result
-            result >>= 3;
-            var temperature = result * 0.25;
-
-            return new SensorValue
+            catch (Exception ex)
             {
-                Value = temperature,
-                Timestamp = time
-            };
+                return new ErrorSensorValue
+                {
+                    Timestamp = time,
+                    ErrorMessage = $"I/O Failure: {ex.GetType()} {ex.Message}",
+                    Value = null
+                };
+            }
         }
 
         private int ReadTwoBytes()

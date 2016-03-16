@@ -7,15 +7,15 @@
              mc:Ignorable="d" 
              Width="200"
              Height="200">
-    
+
     <Grid Width="200" Height="200">
         <StackPanel>
             <TextBlock 
                 HorizontalAlignment="Center" 
                 Margin="0,5,0,10" 
                 FontSize="20"
-                Text="{Binding Name}"/>
-            
+                Text="{Binding Name, Mode=OneTime}"/>
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="70" />
@@ -36,28 +36,40 @@
                     <Line HorizontalAlignment="Center" X1="20" Y1="55" X2="30" Y2="55" StrokeThickness="1" Fill="Black" Stroke="Black" />
                     <Line HorizontalAlignment="Center" X1="20" Y1="30" X2="30" Y2="30" StrokeThickness="1" Fill="Black" Stroke="Black" />
                     <Line HorizontalAlignment="Center" X1="20" Y1="5" X2="30" Y2="5" StrokeThickness="1" Fill="Black" Stroke="Black" />
-                    <TextBlock Text="1024°C" FontSize="6" HorizontalAlignment="Center" Margin="50,0,0,0" />
-                    <TextBlock Text="1024°C" FontSize="6" HorizontalAlignment="Center" Margin="50,25,0,0" />
-                    <TextBlock Text="512°C" FontSize="6" HorizontalAlignment="Center" Margin="50,50,0,0" />
-                    <TextBlock Text="128°C" FontSize="6" HorizontalAlignment="Center" Margin="50,75,0,0" />
+                    <TextBlock Text="{Binding ThemomoterLabel100, Mode=OneTime}" FontSize="6" HorizontalAlignment="Center" Margin="50,0,0,0" />
+                    <TextBlock Text="{Binding ThemomoterLabel75, Mode=OneTime}" FontSize="6" HorizontalAlignment="Center" Margin="50,25,0,0" />
+                    <TextBlock Text="{Binding ThemomoterLabel50, Mode=OneTime}" FontSize="6" HorizontalAlignment="Center" Margin="50,50,0,0" />
+                    <TextBlock Text="{Binding ThemomoterLabel25, Mode=OneTime}" FontSize="6" HorizontalAlignment="Center" Margin="50,75,0,0" />
                     <TextBlock Text="0°C" FontSize="6" HorizontalAlignment="Center" Margin="50,100,0,0" />
                 </Grid>
 
                 <TextBlock 
-                        Grid.Column="1" 
-                        Grid.Row="0"
-                        VerticalAlignment="Center"
-                        FontSize="30" 
-                        Margin="10"
-                        Text="{Binding CelsiusText, Mode=OneWay}" />
+                    Grid.Column="1" 
+                    Grid.Row="0"
+                    VerticalAlignment="Center"
+                    FontSize="30" 
+                    Margin="10"
+                    Text="{Binding CelsiusText, Mode=OneWay}" />
 
                 <TextBlock 
-                        Grid.Column="1" 
-                        Grid.Row="1"
-                        VerticalAlignment="Center"
-                        FontSize="30" 
-                        Margin="10"
-                        Text="{Binding FarenheightText, Mode=OneWay}" />
+                    Grid.Column="1" 
+                    Grid.Row="1"
+                    VerticalAlignment="Center"
+                    FontSize="30" 
+                    Margin="10"
+                    Text="{Binding FarenheightText, Mode=OneWay}" />
+
+                <TextBlock 
+                    Grid.Column="1" 
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    TextWrapping="Wrap"
+                    Foreground="DarkRed"
+                    FontSize="12" 
+                    Margin="10"
+                    Text="{Binding ErrorMessage, Mode=OneWay}" />
             </Grid>
         </StackPanel>
     </Grid>

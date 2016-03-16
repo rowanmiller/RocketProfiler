@@ -19,7 +19,7 @@ namespace RocketProfiler.Controller
         ///     High voltage is listed as 3.3v but should be measured to get exact voltage
         ///     Measure it by setting a digital pin to 1 and measuring the voltage it is set to.
         /// </summary>
-        private static readonly double HIGH_VOLTAGE = 3.1;
+        private static readonly double HIGH_VOLTAGE = 3.14;
 
         /// <summary>
         ///     Sets the value on a digital pin of the Numato GPIO module.

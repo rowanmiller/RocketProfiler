@@ -1,5 +1,6 @@
 ﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -7,7 +8,7 @@ namespace RocketProfiler.Controller
 {
     public class CurrentSensorValue : INotifyPropertyChanged
     {
-        private SensorValue _value;
+        private SensorValue _value = new SensorValue { Timestamp = DateTime.Now, Value = null };
 
         public SensorValue Value
         {

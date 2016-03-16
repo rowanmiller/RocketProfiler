@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AD8495TemperatureSensor.cs" />
     <Compile Include="CurrentSensorValue.cs" />
+    <Compile Include="ErrorSensorValue.cs" />
     <Compile Include="MAX6675TemperatureSensor.cs" />
     <Compile Include="NumatoExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
