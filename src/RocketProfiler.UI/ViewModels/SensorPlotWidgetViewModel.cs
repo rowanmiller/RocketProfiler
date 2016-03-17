@@ -16,7 +16,8 @@ namespace RocketProfiler.UI.ViewModels
     {
         private readonly Sensor _sensor;
         private readonly RunController _runController;
-        private readonly List<DataPoint> _dataPoints;
+
+        private readonly List<DataPoint> _dataPoints = new List<DataPoint>();
 
         public SensorPlotWidgetViewModel(Sensor sensor, RunController runController)
         {
@@ -26,8 +27,6 @@ namespace RocketProfiler.UI.ViewModels
             var timer = new Timer { Interval = 300 };
             timer.Elapsed += RedrawGraph;
             timer.Start();
-
-            _dataPoints = new List<DataPoint>();
         }
 
         private void RedrawGraph(object sender, ElapsedEventArgs e)

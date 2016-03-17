@@ -8,7 +8,24 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="{Binding Title, Mode=OneTime}">
 
-    <Grid>
+    <StackPanel>
         <TextBlock Text="{Binding Title}" />
-    </Grid>
+
+        <ListBox Name="RunsList" ItemsSource="{Binding Runs}" SelectionMode="Single" SelectionChanged="CurrentRun_Changed">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name}" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Description}"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Grid Name="SensorGrid" />
+    </StackPanel>
 </Page>

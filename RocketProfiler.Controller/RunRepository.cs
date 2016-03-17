@@ -33,6 +33,7 @@ namespace RocketProfiler.Controller
                     .Where(r => r.Id == run.Id)
                     .Include(e => e.Snapshots)
                     .ThenInclude(e => e.SensorValues)
+                    .ThenInclude(s => s.SensorInfo)
                     .Load();
             }
         }

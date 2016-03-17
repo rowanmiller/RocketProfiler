@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using RocketProfiler.Controller;
 using RocketProfiler.UI.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace RocketProfiler.UI.Views
@@ -13,20 +14,21 @@ namespace RocketProfiler.UI.Views
     /// </summary>
     public partial class MainView : Window
     {
+        private IList<Sensor> _sensors;
         private Lazy<RunView> _runView;
 
         public MainView()
         {
             InitializeComponent();
 
+            _sensors = App.GetTestSensors();
+
             _runView = new Lazy<RunView>(() =>
             {
-                var sensors = App.GetTestSensors();
-
                 var view = new RunView(
                     new RunViewModel(
-                        sensors,
-                        new RunController(sensors, 300)));
+                        _sensors,
+                        new RunController(_sensors, 300)));
 
                 return view;
             });
@@ -48,7 +50,7 @@ namespace RocketProfiler.UI.Views
             var result = dlg.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                DocumentFrame.Navigate(new SessionView(new SessionViewModel(dlg.FileName)));
+                DocumentFrame.Navigate(new SessionView(new SessionViewModel(_sensors, dlg.FileName)));
             }
         }
     }
