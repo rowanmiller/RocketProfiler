@@ -20,23 +20,23 @@ namespace RocketProfiler.UI.Views
             DataContext = viewModel;
 
             _sessionViewModel = viewModel;
+        }
 
-            for (var index = 0; index < viewModel.PlotWidgets.Count; index++)
+        public void CurrentRun_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            _sessionViewModel.CurrentRun = (Run)RunsList.SelectedItem;
+
+            for (var index = 0; index < _sessionViewModel.PlotWidgets.Count; index++)
             {
                 SensorGrid.RowDefinitions.Add(new RowDefinition
                 {
                     Height = new GridLength(300)
                 });
 
-                Grid.SetRow(viewModel.PlotWidgets[index], index);
-                Grid.SetColumn(viewModel.PlotWidgets[index], 1);
-                SensorGrid.Children.Add(viewModel.PlotWidgets[index]);
+                Grid.SetRow(_sessionViewModel.PlotWidgets[index], index);
+                Grid.SetColumn(_sessionViewModel.PlotWidgets[index], 1);
+                SensorGrid.Children.Add(_sessionViewModel.PlotWidgets[index]);
             }
-        }
-
-        public void CurrentRun_Changed(object sender, SelectionChangedEventArgs e)
-        {
-            _sessionViewModel.CurrentRun = (Run)RunsList.SelectedItem;
         }
     }
 }

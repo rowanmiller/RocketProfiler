@@ -9,6 +9,7 @@ using OxyPlot.Axes;
 using OxyPlot.Wpf;
 using RocketProfiler.Controller;
 using TimeSpanAxis = OxyPlot.Wpf.TimeSpanAxis;
+using System.Linq;
 
 namespace RocketProfiler.UI.ViewModels
 {
@@ -16,52 +17,18 @@ namespace RocketProfiler.UI.ViewModels
     {
         private readonly List<HistoryPlotViewModel> _plotViewModels = new List<HistoryPlotViewModel>();
 
-        public SessionViewModel(IList<Sensor> sensors, string sessionFile)
+        public SessionViewModel(RunRepository runRepository, string title)
         {
-            Title = Path.GetFileName(sessionFile);
-
-            RunRepository = new SqliteRunRepository(sessionFile);
-
+            Title = title;
+            RunRepository = runRepository;
             Runs = RunRepository.LoadRuns();
-
-            PlotWidgets = new List<Plot>();
-
-            foreach (var sensor in sensors)
-            {
-                var plotViewModel = new HistoryPlotViewModel(sensor);
-
-                var plot = new Plot {Title = sensor.Info.Name};
-                plot.Axes.Add(new TimeSpanAxis
-                {
-                    Position = AxisPosition.Bottom,
-                    StringFormat = "mm:ss"
-                });
-
-                plot.Series.Add(
-                    new LineSeries
-                    {
-                        ItemsSource = plotViewModel.DataPoints
-                    });
-
-                plotViewModel.PropertyChanged += (sender, args) =>
-                {
-                    if (args.PropertyName == "DataPoints")
-                    {
-                        Application.Current.Dispatcher.InvokeAsync(() =>
-                            plot.InvalidatePlot());
-                    }
-                };
-
-                _plotViewModels.Add(plotViewModel);
-                PlotWidgets.Add(plot);
-            }
         }
 
         public RunRepository RunRepository { get; }
 
-        public string Title { get; private set; }
+        public string Title { get; }
 
-        public IList<Run> Runs { get; private set; }
+        public IList<Run> Runs { get; }
 
         public Run CurrentRun
         {
@@ -69,14 +36,44 @@ namespace RocketProfiler.UI.ViewModels
             {
                 RunRepository.PopulateRun(value);
 
-                foreach (var viewModel in _plotViewModels)
+                var dataSeries = value.Snapshots
+                    .SelectMany(s => s.SensorValues)
+                    .GroupBy(s => s.SensorInfo);
+
+                PlotWidgets = new List<Plot>();
+                foreach (var sensorData in dataSeries)
                 {
-                    viewModel.UpdateRun(value);
+                    var plotViewModel = new HistoryPlotViewModel(value, sensorData);
+                    var plot = new Plot { Title = sensorData.Key.Name};
+
+                    plot.Axes.Add(new TimeSpanAxis
+                    {
+                        Position = AxisPosition.Bottom,
+                        StringFormat = "mm:ss"
+                    });
+
+                    plot.Series.Add(
+                        new LineSeries
+                        {
+                            ItemsSource = plotViewModel.DataPoints
+                        });
+
+                    plotViewModel.PropertyChanged += (sender, args) =>
+                    {
+                        if (args.PropertyName == "DataPoints")
+                        {
+                            Application.Current.Dispatcher.InvokeAsync(() =>
+                                plot.InvalidatePlot());
+                        }
+                    };
+
+                    _plotViewModels.Add(plotViewModel);
+                    PlotWidgets.Add(plot);
                 }
             }
         }
 
-        public IList<Plot> PlotWidgets { get; }
+        public IList<Plot> PlotWidgets { get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

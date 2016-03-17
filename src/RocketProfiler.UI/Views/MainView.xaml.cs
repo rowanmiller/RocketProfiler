@@ -5,6 +5,7 @@ using RocketProfiler.Controller;
 using RocketProfiler.UI.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 
 namespace RocketProfiler.UI.Views
@@ -50,7 +51,11 @@ namespace RocketProfiler.UI.Views
             var result = dlg.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                DocumentFrame.Navigate(new SessionView(new SessionViewModel(_sensors, dlg.FileName)));
+                DocumentFrame.Navigate(
+                    new SessionView(
+                        new SessionViewModel(
+                            new SqliteRunRepository(dlg.FileName), 
+                            Path.GetFileName(dlg.FileName))));
             }
         }
     }

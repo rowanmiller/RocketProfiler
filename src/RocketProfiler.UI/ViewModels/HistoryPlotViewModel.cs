@@ -12,39 +12,22 @@ namespace RocketProfiler.UI.ViewModels
 {
     public class HistoryPlotViewModel : INotifyPropertyChanged
     {
-        private readonly Sensor _sensor;
-
         private readonly List<DataPoint> _dataPoints = new List<DataPoint>();
 
-        public HistoryPlotViewModel(Sensor sensor)
+        public HistoryPlotViewModel(Run run, IEnumerable<SensorValue> sensorValues)
         {
-            _sensor = sensor;
-        }
+            var startTime = run.StartTime;
 
-        public void UpdateRun(Run run)
-        {
-            if (run != null)
-            {
-                _dataPoints.Clear();
+            _dataPoints.AddRange(
+                sensorValues
+                    .Where(v => v.Value.HasValue)
+                    .OrderBy(v => v.Timestamp)
+                    .Select(v =>
+                        new DataPoint(
+                            TimeSpanAxis.ToDouble(v.Timestamp - startTime),
+                            v.Value.Value)));
 
-                var startTime = run.StartTime;
-
-                var sensorValues = run
-                    .Snapshots
-                    .Select(s => s.SensorValues.Single(sv => sv.SensorInfo.Name == _sensor.Info.Name))
-                    .ToList();
-
-                _dataPoints.AddRange(
-                    sensorValues
-                        .Where(v => v.Value.HasValue)
-                        .OrderBy(v => v.Timestamp)
-                        .Select(v =>
-                            new DataPoint(
-                                TimeSpanAxis.ToDouble(v.Timestamp - startTime),
-                                v.Value.Value)));
-
-                OnPropertyChanged(nameof(DataPoints));
-            }
+            OnPropertyChanged(nameof(DataPoints));
         }
 
         public IList<DataPoint> DataPoints => _dataPoints;
