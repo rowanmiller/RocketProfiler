@@ -1,5 +1,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +66,7 @@ namespace RocketProfiler.Controller
             {
                 using (var context = new RocketProfilerContext(DatabaseName, GetSensorTypes()))
                 {
-                    context.Database.EnsureCreated();
+                    context.Database.Migrate();
 
                     context.AddRange(_sensors);
 
