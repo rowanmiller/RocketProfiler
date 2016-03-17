@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using RocketProfiler.Controller;
 
-namespace RocketProfiler.Controller.Migrations
+namespace RocketProfiler.Controller.Migrations.RocketProfilerSqlServer
 {
-    [DbContext(typeof(RocketProfilerSqliteContext))]
-    [Migration("20160317195629_UseSensorInfo")]
-    partial class UseSensorInfo
+    [DbContext(typeof(RocketProfilerSqlServerContext))]
+    partial class RocketProfilerSqlServerContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rc2-20230");
+                .HasAnnotation("ProductVersion", "1.0.0-rc2-20252")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("RocketProfiler.Controller.Run", b =>
                 {

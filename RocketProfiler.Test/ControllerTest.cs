@@ -13,6 +13,8 @@ namespace RocketProfiler.Test
 {
     public class ControllerTest
     {
+        private const string LocalDbConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=RocketProfilerTest";
+
         [Fact]
         public void RunController_forces_sensor_reads_and_sets_current_value()
             => RunControllerTest(10, null);
@@ -105,7 +107,7 @@ namespace RocketProfiler.Test
             string databaseName;
             var savedRuns = CreateRuns(2, out databaseName);
 
-            using (var context = new RocketProfilerContext(databaseName))
+            using (var context = new RocketProfilerSqliteContext(databaseName))
             {
                 var runs = context.Runs.Include(e => e.Snapshots).ThenInclude(e => e.SensorValues).ToList();
                 Assert.Equal(2, runs.Count);
@@ -121,7 +123,7 @@ namespace RocketProfiler.Test
             string databaseName;
             var savedRuns = CreateRuns(4, out databaseName);
 
-            var repository = new RunRepository(databaseName);
+            var repository = new SqliteRunRepository(databaseName);
 
             var runs = repository.LoadRuns();
 
@@ -145,6 +147,50 @@ namespace RocketProfiler.Test
             Assert.Empty(runs[3].Snapshots);
 
             AssertRunsEqual(savedRuns[2], runs[2]);
+        }
+
+        [Fact]
+        public void Can_upload_a_run_to_SQL_Server()
+        {
+            using (var context = new RocketProfilerSqlServerContext(LocalDbConnectionString))
+            {
+                context.Database.EnsureDeleted();
+            }
+
+            string databaseName;
+            var savedRuns = CreateRuns(4, out databaseName);
+
+            var repository = new SqliteRunRepository(databaseName);
+            var runs = repository.LoadRuns();
+
+            repository.ExportToSqlServer(runs[1], LocalDbConnectionString);
+            repository.ExportToSqlServer(runs[3], LocalDbConnectionString);
+
+            var serverRepository = new SqlServerRunRepository(LocalDbConnectionString);
+
+            var serverRuns = serverRepository.LoadRuns();
+
+            Assert.Equal(2, serverRuns.Count);
+
+            savedRuns[0] = savedRuns[1];
+            savedRuns[1] = savedRuns[3];
+
+            for (var i = 0; i < 2; i++)
+            {
+                Assert.Equal(savedRuns[i].Name, serverRuns[i].Name);
+                Assert.Equal(savedRuns[i].Description, serverRuns[i].Description);
+                Assert.Equal(savedRuns[i].StartTime, serverRuns[i].StartTime);
+                Assert.Equal(savedRuns[i].EndTime, serverRuns[i].EndTime);
+
+                Assert.Empty(serverRuns[i].Snapshots);
+            }
+
+            serverRepository.PopulateRun(serverRuns[1]);
+
+            Assert.Empty(serverRuns[0].Snapshots);
+            Assert.NotEmpty(serverRuns[1].Snapshots);
+
+            AssertRunsEqual(savedRuns[1], serverRuns[1]);
         }
 
         private static IList<Run> CreateRuns(int count, out string databaseName)

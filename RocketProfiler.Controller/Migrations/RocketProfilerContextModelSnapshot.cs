@@ -7,7 +7,7 @@ using RocketProfiler.Controller;
 
 namespace RocketProfiler.Controller.Migrations
 {
-    [DbContext(typeof(RocketProfilerContext))]
+    [DbContext(typeof(RocketProfilerSqliteContext))]
     partial class RocketProfilerContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

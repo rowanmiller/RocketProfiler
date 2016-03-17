@@ -54,7 +54,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.1.0.0-rc2-20230\lib\net451\Microsoft.EntityFrameworkCore.dll</HintPath>
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.1.0.0-rc2-20252\lib\net451\Microsoft.EntityFrameworkCore.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
@@ -62,7 +62,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.1.0.0-rc2-20230\lib\net451\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.1.0.0-rc2-20252\lib\net451\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
@@ -73,12 +73,16 @@
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.Sqlite.1.0.0-rc2-20230\lib\net451\Microsoft.EntityFrameworkCore.Sqlite.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.SqlServer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.SqlServer.1.0.0-rc2-20252\lib\net451\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.1.0.0-rc2-20230\lib\netstandard1.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.1.0.0-rc2-20252\lib\netstandard1.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Memory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.1.0.0-rc2-20230\lib\net451\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.1.0.0-rc2-20252\lib\net451\Microsoft.Extensions.Caching.Memory.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
@@ -86,11 +90,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.1.0.0-rc2-20230\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.1.0.0-rc2-20252\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc2-20230\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc2-20252\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
@@ -98,7 +102,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.1.0.0-rc2-20230\lib\netstandard1.1\Microsoft.Extensions.Logging.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Logging.1.0.0-rc2-20252\lib\netstandard1.1\Microsoft.Extensions.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
@@ -106,7 +110,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Options, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Options.1.0.0-rc2-20230\lib\netstandard1.0\Microsoft.Extensions.Options.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Options.1.0.0-rc2-20252\lib\netstandard1.0\Microsoft.Extensions.Options.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.PlatformAbstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
@@ -158,10 +162,17 @@
       <DependentUpon>20160317195629_UseSensorInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\RocketProfilerContextModelSnapshot.cs" />
+    <Compile Include="Migrations\RocketProfilerSqlServer\20160317215805_InitialMigration.cs" />
+    <Compile Include="Migrations\RocketProfilerSqlServer\20160317215805_InitialMigration.designer.cs">
+      <DependentUpon>20160317215805_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\RocketProfilerSqlServer\RocketProfilerSqlServerContextModelSnapshot.cs" />
     <Compile Include="NumatoExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RocketProfilerContext.cs" />
+    <Compile Include="RocketProfilerSqliteContext.cs" />
     <Compile Include="RocketProfilerContextDesignTimeFactory.cs" />
+    <Compile Include="RocketProfilerSqlServerContext.cs" />
     <Compile Include="Run.cs" />
     <Compile Include="RunController.cs" />
     <Compile Include="Runner.cs" />
@@ -170,6 +181,8 @@
     <Compile Include="SensorInfo.cs" />
     <Compile Include="SensorValue.cs" />
     <Compile Include="Snapshot.cs" />
+    <Compile Include="SqliteRunRepository.cs" />
+    <Compile Include="SqlServerRunRepository.cs" />
     <Compile Include="TestSensors\RampingTemperatureSensor.cs" />
     <Compile Include="TestSensors\TestTemeratureSensor.cs" />
   </ItemGroup>

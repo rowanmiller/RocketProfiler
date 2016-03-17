@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace RocketProfiler.Controller
 {
-    internal class RocketProfilerContextDesignTimeFactory : IDbContextFactory<RocketProfilerContext>
+    internal class RocketProfilerContextDesignTimeFactory : IDbContextFactory<RocketProfilerSqliteContext>
     {
-        public RocketProfilerContext Create()
-            => new RocketProfilerContext("design_time_database.db");
+        public RocketProfilerSqliteContext Create()
+            => new RocketProfilerSqliteContext("design_time_database.db");
     }
 }

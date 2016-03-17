@@ -5,20 +5,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace RocketProfiler.Controller
 {
-    public class RocketProfilerContext : DbContext
+    public abstract class RocketProfilerContext : DbContext
     {
-        private readonly string _datatbaseName;
-
-        public RocketProfilerContext(string datatbaseName)
-        {
-            _datatbaseName = datatbaseName;
-        }
-
         public DbSet<Run> Runs { get; set; }
         public DbSet<SensorInfo> Sensors { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlite("DataSource=" + _datatbaseName);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             => modelBuilder

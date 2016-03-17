@@ -20,7 +20,7 @@ namespace RocketProfiler.UI.ViewModels
         {
             Title = Path.GetFileName(sessionFile);
 
-            RunRepository = new RunRepository(sessionFile);
+            RunRepository = new SqliteRunRepository(sessionFile);
 
             Runs = RunRepository.LoadRuns();
 

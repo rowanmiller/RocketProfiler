@@ -48,7 +48,7 @@ namespace RocketProfiler.Controller
         {
             InitializeDatabase();
 
-            using (var context = new RocketProfilerContext(DatabaseName))
+            using (var context = new RocketProfilerSqliteContext(DatabaseName))
             {
                 context.AttachRange(_sensorInfos);
                 context.AddRange(_collectedRuns);
@@ -61,7 +61,7 @@ namespace RocketProfiler.Controller
         {
             if (!_initialized)
             {
-                using (var context = new RocketProfilerContext(DatabaseName))
+                using (var context = new RocketProfilerSqliteContext(DatabaseName))
                 {
                     context.Database.Migrate();
 

@@ -7,7 +7,7 @@ using RocketProfiler.Controller;
 
 namespace RocketProfiler.Controller.Migrations
 {
-    [DbContext(typeof(RocketProfilerContext))]
+    [DbContext(typeof(RocketProfilerSqliteContext))]
     [Migration("20160317175455_InitialSchema")]
     partial class InitialSchema
     {

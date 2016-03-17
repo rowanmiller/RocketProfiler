@@ -14,5 +14,13 @@ namespace RocketProfiler.Controller
         // Because Sqlite Migrations can't drop the column and it is non-nullable
         [Required]
         public string Discriminator { get; set; } = "";
+
+        public SensorInfo Clone()
+            => new SensorInfo
+            {
+                Name = Name,
+                Units = Units,
+                MaxValue = MaxValue
+            };
     }
 }

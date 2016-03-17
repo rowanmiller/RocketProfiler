@@ -6,18 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RocketProfiler.Controller
 {
-    public class RunRepository
+    public abstract class RunRepository
     {
-        private readonly string _datatbaseName;
-
-        public RunRepository(string filename)
-        {
-            _datatbaseName = filename;
-        }
+        protected abstract RocketProfilerContext CreateContext();
 
         public IList<Run> LoadRuns()
         {
-            using (var context = new RocketProfilerContext(_datatbaseName))
+            using (var context = CreateContext())
             {
                 return context.Runs.OrderBy(r => r.StartTime).ToList();
             }
@@ -25,7 +20,7 @@ namespace RocketProfiler.Controller
 
         public void PopulateRun(Run run)
         {
-            using (var context = new RocketProfilerContext(_datatbaseName))
+            using (var context = CreateContext())
             {
                 context.Attach(run);
 
@@ -35,6 +30,37 @@ namespace RocketProfiler.Controller
                     .ThenInclude(e => e.SensorValues)
                     .ThenInclude(s => s.SensorInfo)
                     .Load();
+            }
+        }
+
+        public void ExportToSqlServer(Run run, string connectionString)
+        {
+            if (!run.Snapshots.Any())
+            {
+                PopulateRun(run);
+            }
+
+            var clonedSensors = new Dictionary<int, SensorInfo>();
+            var clonedRun = run.Clone(clonedSensors);
+
+            using (var context = new RocketProfilerSqlServerContext(connectionString))
+            {
+                context.Database.Migrate();
+
+                foreach (var clonedSensor in clonedSensors.Values)
+                {
+                    var existingSensor = context.Sensors.FirstOrDefault(e => e.Name == clonedSensor.Name);
+                    if (existingSensor != null)
+                    {
+                        clonedSensor.Id = existingSensor.Id;
+                        context.Entry(existingSensor).State = EntityState.Detached;
+                        context.Entry(clonedSensor).State = EntityState.Unchanged;
+                    }
+                }
+
+                context.Add(clonedRun);
+
+                context.SaveChanges();
             }
         }
     }
