@@ -76,6 +76,7 @@
     <Compile Include="ViewModels\SensorPlotWidgetViewModel.cs" />
     <Compile Include="ViewModels\SessionViewModel.cs" />
     <Compile Include="ViewModels\TemperatureSensorWidgetViewModel.cs" />
+    <Compile Include="ViewModels\UploadViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -92,6 +93,9 @@
     <Compile Include="Views\TemperatureSensorWidget.xaml.cs">
       <DependentUpon>TemperatureSensorWidget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UploadView.xaml.cs">
+      <DependentUpon>UploadView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +109,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TemperatureSensorWidget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UploadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -154,6 +162,9 @@
   <ItemGroup>
     <Resource Include="Images\Clipboard.ico" />
     <Resource Include="Images\Radar.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Bookmark.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

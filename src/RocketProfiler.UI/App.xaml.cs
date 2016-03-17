@@ -17,6 +17,12 @@ namespace RocketProfiler.UI
         private void App_OnStartup(object sender, StartupEventArgs e)
             => new MainView().Show();
 
+        public static string GetRemoteConnectionString()
+        {
+            return SqlServerRunRepository.FindAzureConnectionString("RocketProfiler")
+                ?? SqlServerRunRepository.GetLocalDbConnectionString("RocketProfiler");
+        }
+
         public static List<Sensor> GetRealSensors()
         {
             var numatoPort = new SerialPort();

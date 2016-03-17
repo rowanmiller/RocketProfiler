@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace RocketProfiler.UI.Views
 {
@@ -54,8 +55,50 @@ namespace RocketProfiler.UI.Views
                 DocumentFrame.Navigate(
                     new SessionView(
                         new SessionViewModel(
-                            new SqliteRunRepository(dlg.FileName), 
+                            new SqliteRunRepository(dlg.FileName),
                             Path.GetFileName(dlg.FileName))));
+            }
+        }
+
+        private void OpenRemoteSession_Click(object sender, RoutedEventArgs e)
+        {
+            DocumentFrame.Navigate(
+                    new SessionView(
+                        new SessionViewModel(
+                            new SqlServerRunRepository(App.GetRemoteConnectionString()),
+                            "Remote Runs")));
+        }
+
+        private void Upload_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new OpenFileDialog
+            {
+                DefaultExt = ".rocket",
+                Filter = "RocketProfiler Sessions (.rocket)|*.rocket",
+            };
+
+            var result = dlg.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                var viewModel = new UploadViewModel(dlg.FileName);
+                var view = new UploadView(viewModel);
+                view.Show();
+
+                var thread = new System.Threading.Thread(
+                    new System.Threading.ThreadStart(
+                        delegate ()
+                        {
+                            viewModel.DoUpload();
+
+                            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+                                new Action(() =>
+                                {
+                                    view.Close();
+                                }));
+                        }
+                    ));
+                thread.Start();
+
             }
         }
     }

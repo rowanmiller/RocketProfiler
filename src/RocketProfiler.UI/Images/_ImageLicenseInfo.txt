@@ -1,4 +1,5 @@
 ﻿The following images are licensed as freeware from http://www.iconarchive.com/show/gur-project-icons-by-e-young.html
- * clipboard.ico
- * radar.ico
- * rocket.ico
+ * Bookmark.ico
+ * Clipboard.ico
+ * Radar.ico
+ * Rocket.ico
