@@ -9,7 +9,7 @@ namespace RocketProfiler.Controller
     public class Runner : IDisposable
     {
         private readonly int _pollingInterval;
-        private readonly object _lock = new object();
+        private readonly object _lock;
         private readonly IList<Sensor> _sensors;
         private readonly Timer _timer;
         private readonly DateTime _startedAt;
@@ -19,12 +19,13 @@ namespace RocketProfiler.Controller
 
         private Run _run;
 
-        public Runner(IList<Sensor> sensors, int pollingInterval)
+        public Runner(IList<Sensor> sensors, int pollingInterval, object dataLock)
         {
             _sensors = sensors;
             _startedAt = DateTime.UtcNow;
             _timer = new Timer(_ => SampleSensors(), null, 0, Timeout.Infinite);
             _pollingInterval = pollingInterval;
+            _lock = dataLock;
         }
 
         public void RecordRun(Run run)

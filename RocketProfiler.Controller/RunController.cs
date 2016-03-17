@@ -16,16 +16,18 @@ namespace RocketProfiler.Controller
         public RunController(IList<Sensor> sensors, int pollingInterval)
         {
             _sensors = sensors;
-            _runner = new Runner(_sensors, pollingInterval);
+            _runner = new Runner(_sensors, pollingInterval, Lock);
         }
 
-        private List<Type> GetSensorTypes() 
+        private List<Type> GetSensorTypes()
             => _sensors.Select(e => e.GetType()).Distinct().ToList();
 
         public virtual string DatabaseName { get; set; }
             = ("RocketProfiler_" + DateTime.Now + ".rocket").Replace('/', '_').Replace(' ', '_').Replace(':', '_');
 
         public virtual Run CurrentRun { get; private set; }
+
+        public object Lock { get; } = new object();
 
         public virtual void StartRecoding(string runName, string runDescription)
             => _runner.RecordRun(CurrentRun = new Run

@@ -1,21 +1,23 @@
 ﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
 using OxyPlot.Axes;
 using OxyPlot.Wpf;
 using RocketProfiler.Controller;
 using RocketProfiler.UI.Views;
-using System.Timers;
-using System.ComponentModel;
-using System;
-using System.Runtime.CompilerServices;
+using TimeSpanAxis = OxyPlot.Wpf.TimeSpanAxis;
 
 namespace RocketProfiler.UI.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private Timer _runTimer;
+        private readonly Timer _runTimer;
 
         public MainWindowViewModel(IEnumerable<Sensor> sensors, RunController runController)
         {
@@ -33,7 +35,7 @@ namespace RocketProfiler.UI.ViewModels
                 var plotViewModel = new SensorPlotWidgetViewModel(sensor, RunController);
 
                 var plot = new Plot();
-                plot.Axes.Add(new OxyPlot.Wpf.TimeSpanAxis
+                plot.Axes.Add(new TimeSpanAxis
                 {
                     Position = AxisPosition.Bottom,
                     StringFormat = "mm:ss"
@@ -48,8 +50,8 @@ namespace RocketProfiler.UI.ViewModels
                     {
                         if (args.PropertyName == "DataPoints")
                         {
-                            App.Current.Dispatcher.InvokeAsync(() =>
-                            plot.InvalidatePlot());
+                            Application.Current.Dispatcher.InvokeAsync(() =>
+                                plot.InvalidatePlot());
                         }
                     };
 
@@ -57,10 +59,7 @@ namespace RocketProfiler.UI.ViewModels
             }
 
             _runTimer = new Timer(100);
-            _runTimer.Elapsed += (_, __) =>
-            {
-                OnPropertyChanged(nameof(TimerText));
-            };
+            _runTimer.Elapsed += (_, __) => { OnPropertyChanged(nameof(TimerText)); };
         }
 
         public void StartRun(string runName, string runDescription)
@@ -86,9 +85,12 @@ namespace RocketProfiler.UI.ViewModels
         {
             get
             {
-                return RunController.CurrentRun == null
-                    ? "0:00:00.0"
-                    : (DateTime.UtcNow - RunController.CurrentRun.StartTime).ToString("g").Substring(0, 9);
+                lock (RunController.Lock)
+                {
+                    return RunController.CurrentRun == null
+                        ? "0:00:00.0"
+                        : (DateTime.UtcNow - RunController.CurrentRun.StartTime).ToString("g").Substring(0, 9);
+                }
             }
         }
 

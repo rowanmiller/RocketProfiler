@@ -1,8 +1,8 @@
 ﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using RocketProfiler.Controller;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using RocketProfiler.Controller;
 
 namespace RocketProfiler.UI.ViewModels
 {
@@ -20,15 +20,13 @@ namespace RocketProfiler.UI.ViewModels
             ThemomoterLabel100 = (int)_sensor.MaxValue + "°C";
 
             _sensor.LastRead.PropertyChanged += (_, __) =>
-            {
-                OnPropertyChanged(nameof(CelsiusText));
-                OnPropertyChanged(nameof(FarenheightText));
-                OnPropertyChanged(nameof(ThermomoterValue));
-                OnPropertyChanged(nameof(ErrorMessage));
-            };
+                {
+                    OnPropertyChanged(nameof(CelsiusText));
+                    OnPropertyChanged(nameof(FarenheightText));
+                    OnPropertyChanged(nameof(ThermomoterValue));
+                    OnPropertyChanged(nameof(ErrorMessage));
+                };
         }
-
-
 
         public string Name { get; private set; }
 

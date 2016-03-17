@@ -1,5 +1,6 @@
 ﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -22,8 +23,7 @@ namespace RocketProfiler.UI.ViewModels
             _sensor = sensor;
             _runController = runController;
 
-            var timer = new Timer();
-            timer.Interval = 300;
+            var timer = new Timer { Interval = 300 };
             timer.Elapsed += RedrawGraph;
             timer.Start();
 
@@ -32,18 +32,25 @@ namespace RocketProfiler.UI.ViewModels
 
         private void RedrawGraph(object sender, ElapsedEventArgs e)
         {
-            _dataPoints.Clear();
-
             if (_runController.CurrentRun != null)
             {
-                var startTime = _runController.CurrentRun.StartTime;
+                _dataPoints.Clear();
 
-                _dataPoints.AddRange(
-                    _runController
+                List<SensorValue> sensorValues;
+                DateTime startTime;
+                lock (_runController.Lock)
+                {
+                    startTime = _runController.CurrentRun.StartTime;
+
+                    sensorValues = _runController
                         .CurrentRun
                         .Snapshots
-                        .ToList()
                         .Select(s => s.SensorValues.Single(sv => sv.Sensor.Name == _sensor.Name))
+                        .ToList();
+                }
+
+                _dataPoints.AddRange(
+                    sensorValues
                         .Where(v => v.Value.HasValue)
                         .Select(v =>
                             new DataPoint(

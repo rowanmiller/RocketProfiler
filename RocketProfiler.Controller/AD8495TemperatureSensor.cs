@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+using System;
 using System.IO.Ports;
 
 namespace RocketProfiler.Controller
@@ -18,9 +20,9 @@ namespace RocketProfiler.Controller
         /// <param name="port">
         ///     Name of serial port that the module is hooked to
         /// </param>
-        /// <param name="pin"> 
+        /// <param name="pin">
         ///     Output from the AD8945 (input to the microcontroller) which sets a voltage to indicate the current temperature.
-        ///     Pin is labeled OUT on hardware. 
+        ///     Pin is labeled OUT on hardware.
         /// </param>
         public AD8495TemperatureSensor(string name, SerialPort port, int pin)
         {
@@ -39,7 +41,7 @@ namespace RocketProfiler.Controller
             var time = DateTime.Now;
             try
             {
-                double volts = _port.ReadAnalogPin(_pin);
+                var volts = _port.ReadAnalogPin(_pin);
                 var temperature = (volts - 1.25) / 0.005;
 
                 return new SensorValue

@@ -35,8 +35,14 @@
                 </Grid>
 
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <Button Width="150" Height="150" Background="Green" Name="StartButton" Click="StartButton_Click">Start Run</Button>
-                    <Button Width="150" Height="150" Background="OrangeRed" Name="StopButton" Click="StopButton_Click" IsEnabled="False">Stop Run</Button>
+                    <Button Width="150" Height="150" Background="Green" Name="StartButton" Click="StartButton_Click">
+                        Start
+                        Run
+                    </Button>
+                    <Button Width="150" Height="150" Background="OrangeRed" Name="StopButton" Click="StopButton_Click" IsEnabled="False">
+                        Stop
+                        Run
+                    </Button>
                 </StackPanel>
 
                 <TextBlock Margin="5" VerticalAlignment="Center" Text="{Binding TimerText, Mode=OneWay}" Foreground="White" FontSize="90" />
@@ -45,7 +51,7 @@
 
         <Grid Name="SensorGrid">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
         </Grid>

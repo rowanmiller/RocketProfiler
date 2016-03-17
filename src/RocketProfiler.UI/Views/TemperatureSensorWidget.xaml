@@ -1,20 +1,20 @@
 ﻿<UserControl x:Class="RocketProfiler.UI.Views.TemperatureSensorWidget"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:RocketProfiler.UI.Views"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              Width="200"
              Height="200">
 
     <Grid Width="200" Height="200">
         <StackPanel>
-            <TextBlock 
-                HorizontalAlignment="Center" 
-                Margin="0,5,0,10" 
+            <TextBlock
+                HorizontalAlignment="Center"
+                Margin="0,5,0,10"
                 FontSize="20"
-                Text="{Binding Name, Mode=OneTime}"/>
+                Text="{Binding Name, Mode=OneTime}" />
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -30,7 +30,7 @@
                 <Grid Grid.Column="0" Grid.RowSpan="2">
                     <Rectangle Fill="Black" Width="21" Height="101" Margin="0,3,0,36" />
                     <Ellipse VerticalAlignment="Bottom" Width="40" Height="40" Fill="Red" Stroke="Black" StrokeThickness="1.5" />
-                    <ProgressBar BorderThickness="0"  Foreground="Red" Width="18" Height="100" Value="{Binding ThermomoterValue, Mode=OneWay}" Orientation="Vertical" Margin="0,5,0,36" />
+                    <ProgressBar BorderThickness="0" Foreground="Red" Width="18" Height="100" Value="{Binding ThermomoterValue, Mode=OneWay}" Orientation="Vertical" Margin="0,5,0,36" />
                     <Line HorizontalAlignment="Center" X1="20" Y1="105" X2="30" Y2="105" StrokeThickness="1" Fill="Black" Stroke="Black" />
                     <Line HorizontalAlignment="Center" X1="20" Y1="80" X2="30" Y2="80" StrokeThickness="1" Fill="Black" Stroke="Black" />
                     <Line HorizontalAlignment="Center" X1="20" Y1="55" X2="30" Y2="55" StrokeThickness="1" Fill="Black" Stroke="Black" />
@@ -43,31 +43,31 @@
                     <TextBlock Text="0°C" FontSize="6" HorizontalAlignment="Center" Margin="50,100,0,0" />
                 </Grid>
 
-                <TextBlock 
-                    Grid.Column="1" 
+                <TextBlock
+                    Grid.Column="1"
                     Grid.Row="0"
                     VerticalAlignment="Center"
-                    FontSize="30" 
+                    FontSize="30"
                     Margin="10"
                     Text="{Binding CelsiusText, Mode=OneWay}" />
 
-                <TextBlock 
-                    Grid.Column="1" 
+                <TextBlock
+                    Grid.Column="1"
                     Grid.Row="1"
                     VerticalAlignment="Center"
-                    FontSize="30" 
+                    FontSize="30"
                     Margin="10"
                     Text="{Binding FarenheightText, Mode=OneWay}" />
 
-                <TextBlock 
-                    Grid.Column="1" 
+                <TextBlock
+                    Grid.Column="1"
                     Grid.Row="0"
                     Grid.RowSpan="2"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     TextWrapping="Wrap"
                     Foreground="DarkRed"
-                    FontSize="12" 
+                    FontSize="12"
                     Margin="10"
                     Text="{Binding ErrorMessage, Mode=OneWay}" />
             </Grid>

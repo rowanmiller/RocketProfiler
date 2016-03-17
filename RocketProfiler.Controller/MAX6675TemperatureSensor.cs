@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+using System;
 using System.IO.Ports;
 
 namespace RocketProfiler.Controller
@@ -20,18 +22,18 @@ namespace RocketProfiler.Controller
         /// <param name="port">
         ///     Name of serial port that the module is hooked to
         /// </param>
-        /// <param name="clockPin"> 
+        /// <param name="clockPin">
         ///     Input to the MAX6675 (output from microcontroller) which indicates when to present another bit of data.
-        ///     Pin is labeled SCK on hardware. 
+        ///     Pin is labeled SCK on hardware.
         /// </param>
         /// <param name="chipSelectPin">
-        ///     input to the MAX6675 (output from the microcontroller) which tells the chip when its time to read the 
-        ///     thermocouple and output more data. 
+        ///     input to the MAX6675 (output from the microcontroller) which tells the chip when its time to read the
+        ///     thermocouple and output more data.
         ///     Pins is labeled CS on hardware.
         /// </param>
         /// <param name="dataOutputPin">
         ///     Output from the MAX6675 (input to the microcontroller) which carries each bit of data.
-        ///     Pin is labeled 90 on hardware. 
+        ///     Pin is labeled 90 on hardware.
         /// </param>
         public MAX6675TemperatureSensor(string name, SerialPort port, int clockPin, int chipSelectPin, int dataOutputPin)
         {
@@ -52,7 +54,7 @@ namespace RocketProfiler.Controller
             try
             {
                 _port.SetPin(_chipSelectPin, 0);
-                int result = ReadTwoBytes();
+                var result = ReadTwoBytes();
                 _port.SetPin(_chipSelectPin, 1);
 
                 // Three lest significant bits are flags and not part of reading
@@ -94,8 +96,8 @@ namespace RocketProfiler.Controller
         private int ReadTwoBytes()
         {
             // Two bytes of data is streamed, data pin is set to next bit each time clock pin is cycled
-            int result = 0;
-            for (int i = 15; i >= 0; i--)
+            var result = 0;
+            for (var i = 15; i >= 0; i--)
             {
                 _port.SetPin(_clockPin, 0);
 

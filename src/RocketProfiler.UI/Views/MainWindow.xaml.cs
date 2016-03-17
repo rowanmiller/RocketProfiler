@@ -2,8 +2,8 @@
 
 using System.Windows;
 using System.Windows.Controls;
-using RocketProfiler.UI.ViewModels;
 using Microsoft.Win32;
+using RocketProfiler.UI.ViewModels;
 
 namespace RocketProfiler.UI.Views
 {
@@ -57,11 +57,12 @@ namespace RocketProfiler.UI.Views
             {
                 FileName = "MySession",
                 DefaultExt = ".rocket",
-                Filter = "RocketProfiler Sessions (.rocket)|*.rocket",
+                Filter = "RocketProfiler Sessions (.rocket)|*.rocket"
             };
 
             var result = dlg.ShowDialog();
-            if(result.HasValue && result.Value)
+            if (result.HasValue
+                && result.Value)
             {
                 _mainWindowViewModel.SessionFilePath = dlg.FileName;
             }

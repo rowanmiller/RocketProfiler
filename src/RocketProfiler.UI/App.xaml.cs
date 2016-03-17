@@ -1,12 +1,12 @@
 ﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Windows;
 using RocketProfiler.Controller;
 using RocketProfiler.Controller.TestSensors;
 using RocketProfiler.UI.ViewModels;
 using RocketProfiler.UI.Views;
-using System.IO.Ports;
 
 namespace RocketProfiler.UI
 {
@@ -17,7 +17,6 @@ namespace RocketProfiler.UI
     {
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-
             var sensors = GetTestSensors();
 
             var window = new MainWindow(
@@ -37,8 +36,8 @@ namespace RocketProfiler.UI
 
             return new List<Sensor>
             {
-                 new AD8495TemperatureSensor("Oxidizer Inlet Temp", numatoPort, 0),
-                 new MAX6675TemperatureSensor("Lower Engine Temp", numatoPort, 1, 2, 3)
+                new AD8495TemperatureSensor("Oxidizer Inlet Temp", numatoPort, 0),
+                new MAX6675TemperatureSensor("Lower Engine Temp", numatoPort, 1, 2, 3)
             };
         }
 
