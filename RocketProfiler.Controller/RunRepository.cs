@@ -14,6 +14,8 @@ namespace RocketProfiler.Controller
         {
             using (var context = CreateContext())
             {
+                context.Database.Migrate();
+
                 return context.Runs.OrderBy(r => r.StartTime).ToList();
             }
         }

@@ -19,7 +19,7 @@ namespace RocketProfiler.UI.ViewModels
             ThemomoterLabel75 = (int)_sensor.Info.MaxValue * 0.75 + "°C";
             ThemomoterLabel100 = (int)_sensor.Info.MaxValue + "°C";
 
-            _sensor.LastRead.PropertyChanged += (_, __) =>
+            _sensor.PropertyChanged += (_, __) =>
                 {
                     OnPropertyChanged(nameof(CelsiusText));
                     OnPropertyChanged(nameof(FarenheightText));
@@ -39,7 +39,7 @@ namespace RocketProfiler.UI.ViewModels
         {
             get
             {
-                var value = _sensor.LastRead.Value.Value;
+                var value = _sensor.Value.Value;
                 return value.HasValue
                     ? (int)value + "°C"
                     : string.Empty;
@@ -50,7 +50,7 @@ namespace RocketProfiler.UI.ViewModels
         {
             get
             {
-                var value = _sensor.LastRead.Value.Value;
+                var value = _sensor.Value.Value;
                 return value.HasValue
                     ? (int)(value * 9.0 / 5.0 + 32) + "°F"
                     : string.Empty;
@@ -61,7 +61,7 @@ namespace RocketProfiler.UI.ViewModels
         {
             get
             {
-                var value = _sensor.LastRead.Value.Value;
+                var value = _sensor.Value.Value;
                 return value.HasValue
                     ? (int)(value * 100 / _sensor.Info.MaxValue)
                     : 0;
@@ -72,7 +72,7 @@ namespace RocketProfiler.UI.ViewModels
         {
             get
             {
-                var value = _sensor.LastRead.Value as ErrorSensorValue;
+                var value = _sensor.Value as ErrorSensorValue;
                 return value == null
                     ? string.Empty
                     : value.ErrorMessage;

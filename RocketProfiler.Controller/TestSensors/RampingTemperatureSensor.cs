@@ -32,7 +32,8 @@ namespace RocketProfiler.Controller.TestSensors
         {
             var sensor = new RampingTemperatureSensor(name, sleep);
 
-            sensor.LastRead.PropertyChanged += (s, e) => { readValues.Add(((CurrentSensorValue)s).Value); };
+            sensor.PropertyChanged += (s, e) => readValues.Add(((Sensor)s).Value);
+
             return sensor;
         }
     }
