@@ -17,17 +17,10 @@ namespace RocketProfiler.UI
     {
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            var sensors = GetTestSensors();
-
-            var window = new MainWindow(
-                new MainWindowViewModel(
-                    sensors,
-                    new RunController(sensors, 300)));
-
-            window.Show();
+            new MainView().Show();
         }
 
-        private static List<Sensor> GetRealSensors()
+        public static List<Sensor> GetRealSensors()
         {
             var numatoPort = new SerialPort();
             numatoPort.PortName = "COM4";
@@ -41,7 +34,7 @@ namespace RocketProfiler.UI
             };
         }
 
-        private static List<Sensor> GetTestSensors()
+        public static List<Sensor> GetTestSensors()
         {
             return new List<Sensor>
             {

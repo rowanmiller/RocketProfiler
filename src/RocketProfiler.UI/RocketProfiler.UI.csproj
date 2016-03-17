@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>rocket.ico</ApplicationIcon>
+    <ApplicationIcon>Images\Rocket.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
@@ -71,22 +71,37 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\RunViewModel.cs" />
     <Compile Include="ViewModels\SensorPlotWidgetViewModel.cs" />
+    <Compile Include="ViewModels\SessionViewModel.cs" />
     <Compile Include="ViewModels\TemperatureSensorWidgetViewModel.cs" />
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RunView.xaml.cs">
+      <DependentUpon>RunView.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\SessionView.xaml.cs">
+      <DependentUpon>SessionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TemperatureSensorWidget.xaml.cs">
       <DependentUpon>TemperatureSensorWidget.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\MainWindow.xaml">
+    <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RunView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SessionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TemperatureSensorWidget.xaml">
       <SubType>Designer</SubType>
@@ -130,10 +145,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="rocket.ico" />
+    <Resource Include="Images\Rocket.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="rocket.ico.txt" />
+    <Resource Include="Images\_ImageLicenseInfo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Clipboard.ico" />
+    <Resource Include="Images\Radar.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

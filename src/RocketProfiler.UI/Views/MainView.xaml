@@ -1,0 +1,43 @@
+﻿<Window x:Class="RocketProfiler.UI.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RocketProfiler.UI.Views"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        Title="RocketProfiler" Height="600" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="0" Grid.Row="0" Background="White" BorderBrush="LightGray" BorderThickness="0,0,1,0">
+            <StackPanel Margin="5">
+                <Button Click="CurrentRun_Click" Margin="5" FontSize="14" Background="Transparent">
+                    <Grid Width="160">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/RocketProfiler.UI;component/Images/Radar.ico" />
+                            <TextBlock Margin="5,0">Current Session</TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Button>
+                <Button Click="OpenSession_Click" Margin="5" FontSize="14" Background="Transparent">
+                    <Grid Width="160">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/RocketProfiler.UI;component/Images/Clipboard.ico" />
+                            <TextBlock Margin="5,0">Open Session...</TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <Frame Grid.Column="1" Grid.Row="0" Name="DocumentFrame" />
+    </Grid>
+</Window>

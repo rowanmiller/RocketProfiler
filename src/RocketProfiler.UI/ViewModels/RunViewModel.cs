@@ -15,11 +15,11 @@ using TimeSpanAxis = OxyPlot.Wpf.TimeSpanAxis;
 
 namespace RocketProfiler.UI.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class RunViewModel : INotifyPropertyChanged
     {
         private readonly Timer _runTimer;
 
-        public MainWindowViewModel(IEnumerable<Sensor> sensors, RunController runController)
+        public RunViewModel(IEnumerable<Sensor> sensors, RunController runController)
         {
             RunController = runController;
 

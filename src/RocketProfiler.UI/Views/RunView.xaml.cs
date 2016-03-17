@@ -10,11 +10,11 @@ namespace RocketProfiler.UI.Views
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class RunView : Page
     {
-        private readonly MainWindowViewModel _mainWindowViewModel;
+        private readonly RunViewModel _mainWindowViewModel;
 
-        public MainWindow(MainWindowViewModel mainWindowViewModel)
+        public RunView(RunViewModel mainWindowViewModel)
         {
             InitializeComponent();
             DataContext = mainWindowViewModel;
