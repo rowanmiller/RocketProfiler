@@ -115,6 +115,7 @@
     <Compile Include="Run.cs" />
     <Compile Include="RunController.cs" />
     <Compile Include="Runner.cs" />
+    <Compile Include="RunRepository.cs" />
     <Compile Include="Sensor.cs" />
     <Compile Include="SensorValue.cs" />
     <Compile Include="Snapshot.cs" />

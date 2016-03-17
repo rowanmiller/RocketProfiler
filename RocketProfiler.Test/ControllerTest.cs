@@ -102,48 +102,82 @@ namespace RocketProfiler.Test
         [Fact]
         public void Controller_can_persist_runs()
         {
-            var sensors = new Sensor[]
-            {
-                new RampingTemperatureSensor("Sensor1"),
-                new RampingTemperatureSensor("Sensor1")
-            };
-
             string databaseName;
-            Run run1;
-            Run run2;
-
-            using (var controller = new RunController(sensors, 70))
-            {
-                Assert.Null(controller.CurrentRun);
-
-                Thread.Sleep(30);
-
-                controller.StartRecoding("TestRun1", "A test run.");
-                run1 = controller.CurrentRun;
-                Thread.Sleep(500);
-                controller.StopRecording();
-
-                Thread.Sleep(30);
-
-                controller.StartRecoding("TestRun2", "A test run again.");
-                run2 = controller.CurrentRun;
-                Thread.Sleep(500);
-                controller.StopRecording();
-
-                Thread.Sleep(30);
-
-                controller.PersistRuns();
-
-                databaseName = controller.DatabaseName;
-            }
+            var savedRuns = CreateRuns(2, out databaseName);
 
             using (var context = new RocketProfilerContext(databaseName, new[] { typeof(RampingTemperatureSensor) }))
             {
                 var runs = context.Runs.Include(e => e.Snapshots).ThenInclude(e => e.SensorValues).ToList();
                 Assert.Equal(2, runs.Count);
 
-                AssertRunsEqual(run1, runs[0]);
-                AssertRunsEqual(run2, runs[1]);
+                AssertRunsEqual(savedRuns[0], runs[0]);
+                AssertRunsEqual(savedRuns[1], runs[1]);
+            }
+        }
+
+        [Fact]
+        public void Can_load_runs()
+        {
+            string databaseName;
+            var savedRuns = CreateRuns(4, out databaseName);
+
+            var repository = new RunRepository(databaseName, new[] { typeof(RampingTemperatureSensor) });
+
+            var runs = repository.LoadRuns();
+
+            Assert.Equal(4, runs.Count);
+
+            for (var i = 0; i < 4; i++)
+            {
+                Assert.Equal(savedRuns[i].Name, runs[i].Name);
+                Assert.Equal(savedRuns[i].Description, runs[i].Description);
+                Assert.Equal(savedRuns[i].StartTime, runs[i].StartTime);
+                Assert.Equal(savedRuns[i].EndTime, runs[i].EndTime);
+
+                Assert.Empty(runs[i].Snapshots);
+            }
+
+            repository.PopulateRun(runs[2]);
+
+            Assert.Empty(runs[0].Snapshots);
+            Assert.Empty(runs[1].Snapshots);
+            Assert.NotEmpty(runs[2].Snapshots);
+            Assert.Empty(runs[3].Snapshots);
+
+            AssertRunsEqual(savedRuns[2], runs[2]);
+        }
+
+        private static IList<Run> CreateRuns(int count, out string databaseName)
+        {
+            var sensors = new Sensor[]
+            {
+                new RampingTemperatureSensor("Sensor1"),
+                new RampingTemperatureSensor("Sensor1")
+            };
+
+            using (var controller = new RunController(sensors, 70))
+            {
+                Assert.Null(controller.CurrentRun);
+
+                var runs = new List<Run>();
+
+                for (var i = 0; i < count; i++)
+                {
+                    Thread.Sleep(30);
+
+                    controller.StartRecoding("TestRun1", "A test run.");
+                    runs.Add(controller.CurrentRun);
+                    Thread.Sleep(500);
+                    controller.StopRecording();
+                }
+
+                Thread.Sleep(30);
+
+                controller.PersistRuns();
+
+                databaseName = controller.DatabaseName;
+
+                return runs;
             }
         }
 
