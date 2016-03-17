@@ -153,6 +153,10 @@
     <Compile Include="Migrations\20160317175455_InitialSchema.designer.cs">
       <DependentUpon>20160317175455_InitialSchema.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20160317195629_UseSensorInfo.cs" />
+    <Compile Include="Migrations\20160317195629_UseSensorInfo.designer.cs">
+      <DependentUpon>20160317195629_UseSensorInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\RocketProfilerContextModelSnapshot.cs" />
     <Compile Include="NumatoExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -163,6 +167,7 @@
     <Compile Include="Runner.cs" />
     <Compile Include="RunRepository.cs" />
     <Compile Include="Sensor.cs" />
+    <Compile Include="SensorInfo.cs" />
     <Compile Include="SensorValue.cs" />
     <Compile Include="Snapshot.cs" />
     <Compile Include="TestSensors\RampingTemperatureSensor.cs" />

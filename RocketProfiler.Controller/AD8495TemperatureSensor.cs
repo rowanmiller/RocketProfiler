@@ -17,6 +17,7 @@ namespace RocketProfiler.Controller
         /// <summary>
         ///     Initializes a new instance of the AD8495TemperatureSensor class.
         /// </summary>
+        /// <param name="name">The sensor name</param>
         /// <param name="port">
         ///     Name of serial port that the module is hooked to
         /// </param>
@@ -25,15 +26,11 @@ namespace RocketProfiler.Controller
         ///     Pin is labeled OUT on hardware.
         /// </param>
         public AD8495TemperatureSensor(string name, SerialPort port, int pin)
+            : base(name, "Degrees Celsius", 400)
         {
-            Name = name;
             _port = port;
             _pin = pin;
         }
-
-        public override string Units => "Degrees Celsius";
-
-        public override double MaxValue => 400;
 
         public override SensorValue DoRead()
         {
@@ -46,7 +43,7 @@ namespace RocketProfiler.Controller
 
                 return new SensorValue
                 {
-                    Sensor = this,
+                    SensorInfo = Info,
                     Value = temperature,
                     Timestamp = time
                 };
@@ -55,7 +52,7 @@ namespace RocketProfiler.Controller
             {
                 return new ErrorSensorValue
                 {
-                    Sensor = this,
+                    SensorInfo = Info,
                     Timestamp = time,
                     ErrorMessage = $"I/O Failure: {ex.GetType()} {ex.Message}",
                     Value = null

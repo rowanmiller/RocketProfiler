@@ -9,19 +9,16 @@ namespace RocketProfiler.Controller
 {
     public class RunController : IDisposable
     {
-        private readonly IList<Sensor> _sensors;
+        private readonly IList<SensorInfo> _sensorInfos;
         private readonly Runner _runner;
         private readonly IList<Run> _collectedRuns = new List<Run>();
         private bool _initialized;
 
         public RunController(IList<Sensor> sensors, int pollingInterval)
         {
-            _sensors = sensors;
-            _runner = new Runner(_sensors, pollingInterval, Lock);
+            _sensorInfos = sensors.Select(s => s.Info).ToList();
+            _runner = new Runner(sensors, pollingInterval, Lock);
         }
-
-        private List<Type> GetSensorTypes()
-            => _sensors.Select(e => e.GetType()).Distinct().ToList();
 
         public virtual string DatabaseName { get; set; }
             = ("RocketProfiler_" + DateTime.Now + ".rocket").Replace('/', '_').Replace(' ', '_').Replace(':', '_');
@@ -51,9 +48,9 @@ namespace RocketProfiler.Controller
         {
             InitializeDatabase();
 
-            using (var context = new RocketProfilerContext(DatabaseName, GetSensorTypes()))
+            using (var context = new RocketProfilerContext(DatabaseName))
             {
-                context.AttachRange(_sensors);
+                context.AttachRange(_sensorInfos);
                 context.AddRange(_collectedRuns);
                 context.SaveChanges();
                 _collectedRuns.Clear();
@@ -64,11 +61,11 @@ namespace RocketProfiler.Controller
         {
             if (!_initialized)
             {
-                using (var context = new RocketProfilerContext(DatabaseName, GetSensorTypes()))
+                using (var context = new RocketProfilerContext(DatabaseName))
                 {
                     context.Database.Migrate();
 
-                    context.AddRange(_sensors);
+                    context.AddRange(_sensorInfos);
 
                     context.SaveChanges();
                 }

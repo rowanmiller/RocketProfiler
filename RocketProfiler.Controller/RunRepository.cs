@@ -1,6 +1,5 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -10,17 +9,15 @@ namespace RocketProfiler.Controller
     public class RunRepository
     {
         private readonly string _datatbaseName;
-        private readonly IList<Type> _sensorTypes;
 
-        public RunRepository(string filename, IList<Type> sensorTypes)
+        public RunRepository(string filename)
         {
             _datatbaseName = filename;
-            _sensorTypes = sensorTypes;
         }
 
         public IList<Run> LoadRuns()
         {
-            using (var context = new RocketProfilerContext(_datatbaseName, _sensorTypes))
+            using (var context = new RocketProfilerContext(_datatbaseName))
             {
                 return context.Runs.OrderBy(r => r.StartTime).ToList();
             }
@@ -28,7 +25,7 @@ namespace RocketProfiler.Controller
 
         public void PopulateRun(Run run)
         {
-            using (var context = new RocketProfilerContext(_datatbaseName, _sensorTypes))
+            using (var context = new RocketProfilerContext(_datatbaseName))
             {
                 context.Attach(run);
 

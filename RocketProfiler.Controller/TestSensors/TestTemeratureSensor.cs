@@ -14,15 +14,11 @@ namespace RocketProfiler.Controller.TestSensors
         private int _index = -1;
 
         public TestTemperatureSensor(string name, IList<int> values, int? sleep = null)
+            : base(name, "Test Units", values.Max() * 2)
         {
             _values = values;
             _sleep = sleep;
-            Name = name;
         }
-
-        public override string Units { get; } = "Test Units";
-
-        public override double MaxValue => _values.Max() * 2;
 
         public override SensorValue DoRead()
         {
@@ -33,7 +29,7 @@ namespace RocketProfiler.Controller.TestSensors
 
             return new SensorValue
             {
-                Sensor = this,
+                SensorInfo = Info,
                 Value = _values[_index = (_index + 1) % _values.Count],
                 Timestamp = DateTime.UtcNow
             };

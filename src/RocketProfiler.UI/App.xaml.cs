@@ -5,7 +5,6 @@ using System.IO.Ports;
 using System.Windows;
 using RocketProfiler.Controller;
 using RocketProfiler.Controller.TestSensors;
-using RocketProfiler.UI.ViewModels;
 using RocketProfiler.UI.Views;
 
 namespace RocketProfiler.UI
@@ -16,9 +15,7 @@ namespace RocketProfiler.UI
     public partial class App : Application
     {
         private void App_OnStartup(object sender, StartupEventArgs e)
-        {
-            new MainView().Show();
-        }
+            => new MainView().Show();
 
         public static List<Sensor> GetRealSensors()
         {
@@ -35,12 +32,10 @@ namespace RocketProfiler.UI
         }
 
         public static List<Sensor> GetTestSensors()
-        {
-            return new List<Sensor>
+            => new List<Sensor>
             {
                 new TestTemperatureSensor("Oxidizer Inlet Temp", new List<int> { 70, 75, 80, 85, 75 }),
                 new RampingTemperatureSensor("Lower Engine Temp")
             };
-        }
     }
 }

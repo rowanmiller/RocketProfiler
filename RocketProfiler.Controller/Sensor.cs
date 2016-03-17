@@ -4,10 +4,10 @@ namespace RocketProfiler.Controller
 {
     public abstract class Sensor
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public abstract string Units { get; }
-        public abstract double MaxValue { get; }
+        protected Sensor(string name, string units, double maxValue)
+        {
+            Info = new SensorInfo { Name = name, Units = units, MaxValue = maxValue };
+        }
 
         public virtual SensorValue ReadValue()
         {
@@ -18,5 +18,7 @@ namespace RocketProfiler.Controller
         public abstract SensorValue DoRead();
 
         public CurrentSensorValue LastRead { get; } = new CurrentSensorValue();
+
+        public SensorInfo Info { get; }
     }
 }

@@ -19,6 +19,7 @@ namespace RocketProfiler.Controller
         /// <summary>
         ///     Initializes a new instance of the AD8495TemperatureSensor class.
         /// </summary>
+        /// <param name="name">The sensor name</param>
         /// <param name="port">
         ///     Name of serial port that the module is hooked to
         /// </param>
@@ -36,17 +37,13 @@ namespace RocketProfiler.Controller
         ///     Pin is labeled 90 on hardware.
         /// </param>
         public MAX6675TemperatureSensor(string name, SerialPort port, int clockPin, int chipSelectPin, int dataOutputPin)
+            : base(name, "Degrees Celsius", 1024)
         {
-            Name = name;
             _port = port;
             _clockPin = clockPin;
             _chipSelectPin = chipSelectPin;
             _dataOutputPin = dataOutputPin;
         }
-
-        public override string Units => "Degrees Celsius";
-
-        public override double MaxValue => 1024;
 
         public override SensorValue DoRead()
         {
@@ -63,7 +60,7 @@ namespace RocketProfiler.Controller
                 {
                     return new ErrorSensorValue
                     {
-                        Sensor = this,
+                        SensorInfo = Info,
                         Timestamp = time,
                         ErrorMessage = "Thermocouple not attached",
                         Value = null
@@ -76,7 +73,7 @@ namespace RocketProfiler.Controller
 
                 return new SensorValue
                 {
-                    Sensor = this,
+                    SensorInfo = Info,
                     Value = temperature,
                     Timestamp = time
                 };
@@ -85,7 +82,7 @@ namespace RocketProfiler.Controller
             {
                 return new ErrorSensorValue
                 {
-                    Sensor = this,
+                    SensorInfo = Info,
                     Timestamp = time,
                     ErrorMessage = $"I/O Failure: {ex.GetType()} {ex.Message}",
                     Value = null

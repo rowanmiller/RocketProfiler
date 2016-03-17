@@ -19,6 +19,7 @@ namespace RocketProfiler.Controller.TestSensors
             {
                 values.Add(i);
             }
+
             for (var i = 1000; i >= 0; i -= 10)
             {
                 values.Add(i);

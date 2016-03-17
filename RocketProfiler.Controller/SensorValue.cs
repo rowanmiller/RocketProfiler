@@ -11,7 +11,8 @@ namespace RocketProfiler.Controller
         public int SnapshotId { get; set; }
         public Snapshot Snapshot { get; set; }
 
-        public Sensor Sensor { get; set; }
+        public int SensorId { get; set; }
+        public SensorInfo SensorInfo { get; set; }
 
         public DateTime Timestamp { get; set; }
 

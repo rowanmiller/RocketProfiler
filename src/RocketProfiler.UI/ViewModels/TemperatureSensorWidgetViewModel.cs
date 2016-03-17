@@ -13,11 +13,11 @@ namespace RocketProfiler.UI.ViewModels
         public TemperatureSensorWidgetViewModel(Sensor sensor)
         {
             _sensor = sensor;
-            Name = _sensor.Name;
-            ThemomoterLabel25 = (int)_sensor.MaxValue * 0.25 + "°C";
-            ThemomoterLabel50 = (int)_sensor.MaxValue * 0.5 + "°C";
-            ThemomoterLabel75 = (int)_sensor.MaxValue * 0.75 + "°C";
-            ThemomoterLabel100 = (int)_sensor.MaxValue + "°C";
+            Name = _sensor.Info.Name;
+            ThemomoterLabel25 = (int)_sensor.Info.MaxValue * 0.25 + "°C";
+            ThemomoterLabel50 = (int)_sensor.Info.MaxValue * 0.5 + "°C";
+            ThemomoterLabel75 = (int)_sensor.Info.MaxValue * 0.75 + "°C";
+            ThemomoterLabel100 = (int)_sensor.Info.MaxValue + "°C";
 
             _sensor.LastRead.PropertyChanged += (_, __) =>
                 {
@@ -63,7 +63,7 @@ namespace RocketProfiler.UI.ViewModels
             {
                 var value = _sensor.LastRead.Value.Value;
                 return value.HasValue
-                    ? (int)(value * 100 / _sensor.MaxValue)
+                    ? (int)(value * 100 / _sensor.Info.MaxValue)
                     : 0;
             }
         }

@@ -105,7 +105,7 @@ namespace RocketProfiler.Test
             string databaseName;
             var savedRuns = CreateRuns(2, out databaseName);
 
-            using (var context = new RocketProfilerContext(databaseName, new[] { typeof(RampingTemperatureSensor) }))
+            using (var context = new RocketProfilerContext(databaseName))
             {
                 var runs = context.Runs.Include(e => e.Snapshots).ThenInclude(e => e.SensorValues).ToList();
                 Assert.Equal(2, runs.Count);
@@ -121,7 +121,7 @@ namespace RocketProfiler.Test
             string databaseName;
             var savedRuns = CreateRuns(4, out databaseName);
 
-            var repository = new RunRepository(databaseName, new[] { typeof(RampingTemperatureSensor) });
+            var repository = new RunRepository(databaseName);
 
             var runs = repository.LoadRuns();
 

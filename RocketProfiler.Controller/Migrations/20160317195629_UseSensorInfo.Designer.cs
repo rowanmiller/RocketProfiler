@@ -8,9 +8,10 @@ using RocketProfiler.Controller;
 namespace RocketProfiler.Controller.Migrations
 {
     [DbContext(typeof(RocketProfilerContext))]
-    partial class RocketProfilerContextModelSnapshot : ModelSnapshot
+    [Migration("20160317195629_UseSensorInfo")]
+    partial class UseSensorInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20230");

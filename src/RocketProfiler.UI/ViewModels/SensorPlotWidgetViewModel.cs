@@ -45,7 +45,7 @@ namespace RocketProfiler.UI.ViewModels
                     sensorValues = _runController
                         .CurrentRun
                         .Snapshots
-                        .Select(s => s.SensorValues.Single(sv => sv.Sensor.Name == _sensor.Name))
+                        .Select(s => s.SensorValues.Single(sv => sv.SensorInfo.Name == _sensor.Info.Name))
                         .ToList();
                 }
 
