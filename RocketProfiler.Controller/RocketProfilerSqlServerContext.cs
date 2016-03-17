@@ -8,6 +8,7 @@ namespace RocketProfiler.Controller
     {
         private readonly string _connectionString;
 
+        // Just easy for Migrations. :-)
         public RocketProfilerSqlServerContext()
         {
             _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=RocketProfilerTest";

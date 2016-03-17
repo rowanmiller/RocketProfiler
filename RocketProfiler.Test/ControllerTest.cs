@@ -150,9 +150,16 @@ namespace RocketProfiler.Test
         }
 
         [Fact]
-        public void Can_upload_a_run_to_SQL_Server()
+        public void Can_upload_a_run_to_LocalDb() 
+            => Can_upload_a_run_to_SQL_Server(LocalDbConnectionString);
+
+        [Fact]
+        public void Can_upload_a_run_to_Azure() 
+            => Can_upload_a_run_to_SQL_Server(SqlServerRunRepository.BuildAzureConnectionString("TestDatabase"));
+
+        private void Can_upload_a_run_to_SQL_Server(string connectionString)
         {
-            using (var context = new RocketProfilerSqlServerContext(LocalDbConnectionString))
+            using (var context = new RocketProfilerSqlServerContext(connectionString))
             {
                 context.Database.EnsureDeleted();
             }
@@ -163,10 +170,10 @@ namespace RocketProfiler.Test
             var repository = new SqliteRunRepository(databaseName);
             var runs = repository.LoadRuns();
 
-            repository.ExportToSqlServer(runs[1], LocalDbConnectionString);
-            repository.ExportToSqlServer(runs[3], LocalDbConnectionString);
+            repository.ExportToSqlServer(runs[1], connectionString);
+            repository.ExportToSqlServer(runs[3], connectionString);
 
-            var serverRepository = new SqlServerRunRepository(LocalDbConnectionString);
+            var serverRepository = new SqlServerRunRepository(connectionString);
 
             var serverRuns = serverRepository.LoadRuns();
 
