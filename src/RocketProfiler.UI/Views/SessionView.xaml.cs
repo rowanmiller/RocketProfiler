@@ -3,6 +3,7 @@
 using System.Windows;
 using RocketProfiler.UI.ViewModels;
 using System.Windows.Controls;
+using System.Windows.Media;
 using RocketProfiler.Controller;
 
 namespace RocketProfiler.UI.Views
@@ -43,9 +44,23 @@ namespace RocketProfiler.UI.Views
                     Height = new GridLength(300)
                 });
 
-                Grid.SetRow(_sessionViewModel.PlotWidgets[index], index);
-                Grid.SetColumn(_sessionViewModel.PlotWidgets[index], 1);
-                SensorGrid.Children.Add(_sessionViewModel.PlotWidgets[index]);
+                var plotWidget = _sessionViewModel.PlotWidgets[index];
+                plotWidget.Padding = new Thickness(20);
+
+                var plotBorder = new Border
+                {
+                    Padding = new Thickness(3),
+                    Child = new Border
+                    {
+                        BorderThickness = new Thickness(1),
+                        BorderBrush = Brushes.Black,
+                        Child = plotWidget
+                    }
+                };
+                
+                Grid.SetRow(plotBorder, index);
+                Grid.SetColumn(plotBorder, 1);
+                SensorGrid.Children.Add(plotBorder);
             }
         }
     }

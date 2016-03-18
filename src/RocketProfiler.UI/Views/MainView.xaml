@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RocketProfiler.UI.Views"
         mc:Ignorable="d"
         WindowState="Normal"
-        Title="RocketProfiler" Height="630" Width="1180">
+        Title="RocketProfiler" Height="830" Width="1180">
     <Grid Background="#FF9DCBFA">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
