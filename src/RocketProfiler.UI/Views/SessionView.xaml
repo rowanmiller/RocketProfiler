@@ -10,32 +10,49 @@
     <StackPanel>
         <TextBlock Text="{Binding Title}" />
 
-        <ListBox Name="RunsList" ItemsSource="{Binding Runs}" SelectionMode="Single" SelectionChanged="CurrentRun_Changed">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="300" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Text" Value="{Binding Name}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=Name.Length, FallbackValue=0}" Value="0" >
-                                            <Setter Property="Text" Value="{Binding StartTime}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Description}"></TextBlock>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
+        <DataGrid Name="RunsGrid" ItemsSource="{Binding Runs}" SelectionMode="Single" SelectionUnit="FullRow" AutoGenerateColumns="False" CanUserAddRows="False" SelectionChanged="CurrentRun_Changed">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Run" Width="300" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value="{Binding Name}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Name.Length, FallbackValue=0}" Value="0" >
+                                                <Setter Property="Text" Value="{Binding Id}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Start Time" Width="SizeToCells" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding StartTime}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="End Time" Width="SizeToCells" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding EndTime}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Description" Width="*" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Description}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
         <Grid Name="SensorGrid" />
     </StackPanel>
 </Page>

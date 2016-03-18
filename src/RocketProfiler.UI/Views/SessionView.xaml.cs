@@ -26,15 +26,15 @@ namespace RocketProfiler.UI.Views
 
         private void SessionView_Loaded(object sender, RoutedEventArgs e)
         {
-            if (RunsList.Items.Count > 0)
+            if (RunsGrid.Items.Count > 0)
             {
-                RunsList.SelectedIndex = 0;
+                RunsGrid.SelectedIndex = 0;
             }
         }
 
         public void CurrentRun_Changed(object sender, SelectionChangedEventArgs e)
         {
-            _sessionViewModel.CurrentRun = (Run)RunsList.SelectedItem;
+            _sessionViewModel.CurrentRun = (Run)RunsGrid.SelectedItem;
 
             for (var index = 0; index < _sessionViewModel.PlotWidgets.Count; index++)
             {
