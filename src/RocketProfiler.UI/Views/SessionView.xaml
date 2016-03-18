@@ -14,7 +14,7 @@
             <Border Padding="3" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <DataGrid Name="RunsGrid" ItemsSource="{Binding Runs}" SelectionMode="Single" SelectionUnit="FullRow" AutoGenerateColumns="False" CanUserAddRows="False" SelectionChanged="CurrentRun_Changed">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Run" Width="100" IsReadOnly="True">
+                        <DataGridTemplateColumn Header="Run" Width="150" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>

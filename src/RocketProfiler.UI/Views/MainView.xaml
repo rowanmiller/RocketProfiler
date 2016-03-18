@@ -16,16 +16,16 @@
         <Grid.RowDefinitions>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Border Grid.Column="0" Grid.Row="0" Background="#FF9DCBFA" BorderBrush="LightGray" BorderThickness="0,0,3,0">
+        <Border Grid.Column="0" Grid.Row="0" Background="#FF44619D" BorderBrush="LightGray" BorderThickness="0,0,3,0">
             <StackPanel Margin="5">
                 <Border Height="3" BorderBrush="LightGray" BorderThickness="3" Margin="0,5,0,0" />
-                <Label FontSize="14" HorizontalAlignment="Center">Local Sessions</Label>
+                <Label FontSize="14" HorizontalAlignment="Center" Foreground="LightGray">Local Sessions</Label>
 
                 <Button Click="CurrentRun_Click" Margin="10,5,5,5" FontSize="12" Background="#FFDDDDDD">
                     <Grid Width="160">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <Image Source="/RocketProfiler.UI;component/Images/Rocket.ico" />
-                            <TextBlock Margin="5,0">Current Session</TextBlock>
+                            <TextBlock Margin="5,0" HorizontalAlignment="Center">Current Session</TextBlock>
                         </StackPanel>
                     </Grid>
                 </Button>
@@ -34,19 +34,19 @@
                     <Grid Width="160">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <Image Source="/RocketProfiler.UI;component/Images/Clipboard.ico" />
-                            <TextBlock Margin="5,0">Open...</TextBlock>
+                            <TextBlock Margin="5,0" HorizontalAlignment="Center">Open...</TextBlock>
                         </StackPanel>
                     </Grid>
                 </Button>
                 
                 <Border Height="3" BorderBrush="LightGray" BorderThickness="3" Margin="0,5,0,0" />
-                
-                <Label FontSize="14" HorizontalAlignment="Center">Central Database</Label>
+
+                <Label FontSize="14" HorizontalAlignment="Center" Foreground="LightGray">Central Database</Label>
                 <Button Click="Upload_Click" Margin="10,5,5,5" FontSize="12" Background="#FFDDDDDD">
                     <Grid Width="160">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <Image Source="/RocketProfiler.UI;component/Images/Radar.ico" />
-                            <TextBlock Margin="5,0">Upload...</TextBlock>
+                            <TextBlock Margin="5,0" HorizontalAlignment="Center">Upload...</TextBlock>
                         </StackPanel>
                     </Grid>
                 </Button>
@@ -54,7 +54,7 @@
                     <Grid Width="160">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <Image Source="/RocketProfiler.UI;component/Images/Bookmark.ico" />
-                            <TextBlock Margin="5,0">Open...</TextBlock>
+                            <TextBlock Margin="5,0" HorizontalAlignment="Center">Open</TextBlock>
                         </StackPanel>
                     </Grid>
                 </Button>
