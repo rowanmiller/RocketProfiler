@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using OxyPlot.Axes;
 using OxyPlot.Wpf;
 using RocketProfiler.Controller;
@@ -18,7 +19,7 @@ namespace RocketProfiler.UI.ViewModels
 {
     public class RunViewModel : INotifyPropertyChanged
     {
-        private readonly IList<HistoryPlotViewModel> _plotViewModels;
+        private readonly IList<SensorValuePlotViewModel> _plotViewModels;
         private readonly Timer _runTimer;
 
         public RunViewModel(IEnumerable<Sensor> sensors, RunController runController)
@@ -28,7 +29,7 @@ namespace RocketProfiler.UI.ViewModels
             SensorWidgets = new List<UserControl>();
             PlotWidgets = new List<Plot>();
 
-             _plotViewModels = new List<HistoryPlotViewModel>();
+             _plotViewModels = new List<SensorValuePlotViewModel>();
 
             foreach (var sensor in sensors)
             {
@@ -36,7 +37,7 @@ namespace RocketProfiler.UI.ViewModels
                     new TemperatureSensorWidget(
                         new TemperatureSensorWidgetViewModel(sensor)));
 
-                var plotViewModel = new HistoryPlotViewModel(sensor.Info.Name);
+                var plotViewModel = new SensorValuePlotViewModel(sensor.Info);
 
                 var plot = new Plot();
                 plot.Axes.Add(new TimeSpanAxis
@@ -48,6 +49,12 @@ namespace RocketProfiler.UI.ViewModels
                     new LineSeries
                     {
                         ItemsSource = plotViewModel.DataPoints
+                    });
+                plot.Series.Add(
+                    new LineSeries
+                    {
+                        ItemsSource = plotViewModel.MaxValues,
+                        Color = (Color)ColorConverter.ConvertFromString("Red")
                     });
 
                 plotViewModel.PropertyChanged += (sender, args) =>

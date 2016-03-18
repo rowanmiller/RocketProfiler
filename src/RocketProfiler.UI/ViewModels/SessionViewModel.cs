@@ -9,6 +9,7 @@ using OxyPlot.Wpf;
 using RocketProfiler.Controller;
 using TimeSpanAxis = OxyPlot.Wpf.TimeSpanAxis;
 using System.Linq;
+using System.Windows.Media;
 
 namespace RocketProfiler.UI.ViewModels
 {
@@ -35,13 +36,13 @@ namespace RocketProfiler.UI.ViewModels
 
                 var dataSeries = value.Snapshots
                     .SelectMany(s => s.SensorValues)
-                    .GroupBy(s => s.SensorInfo.Name);
+                    .GroupBy(s => s.SensorInfo);
 
                 PlotWidgets = new List<Plot>();
                 foreach (var sensorData in dataSeries)
                 {
-                    var plotViewModel = new HistoryPlotViewModel(sensorData.Key);
-                    var plot = new Plot { Title = sensorData.Key};
+                    var plotViewModel = new SensorValuePlotViewModel(sensorData.Key);
+                    var plot = new Plot { Title = sensorData.Key.Name};
 
                     plot.Axes.Add(new TimeSpanAxis
                     {
@@ -53,6 +54,13 @@ namespace RocketProfiler.UI.ViewModels
                         new LineSeries
                         {
                             ItemsSource = plotViewModel.DataPoints
+                        });
+
+                    plot.Series.Add(
+                        new LineSeries
+                        {
+                            ItemsSource = plotViewModel.MaxValues,
+                            Color = (Color)ColorConverter.ConvertFromString("Red")
                         });
 
                     plotViewModel.PropertyChanged += (sender, args) =>
