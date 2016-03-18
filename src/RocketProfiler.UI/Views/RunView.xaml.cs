@@ -2,6 +2,7 @@
 
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Microsoft.Win32;
 using RocketProfiler.UI.ViewModels;
 
@@ -27,11 +28,27 @@ namespace RocketProfiler.UI.Views
 
                 Grid.SetRow(mainWindowViewModel.SensorWidgets[index], index);
                 Grid.SetColumn(mainWindowViewModel.SensorWidgets[index], 0);
+
+
                 SensorGrid.Children.Add(mainWindowViewModel.SensorWidgets[index]);
 
-                Grid.SetRow(mainWindowViewModel.PlotWidgets[index], index);
-                Grid.SetColumn(mainWindowViewModel.PlotWidgets[index], 1);
-                SensorGrid.Children.Add(mainWindowViewModel.PlotWidgets[index]);
+                var plotWidget = mainWindowViewModel.PlotWidgets[index];
+                plotWidget.Padding = new Thickness(20);
+
+                var plotBorder = new Border
+                {
+                    Padding = new Thickness(3),
+                    Child = new Border
+                    {
+                        BorderThickness = new Thickness(1),
+                        BorderBrush = Brushes.Black,
+                        Child = plotWidget
+                    }
+                };
+
+                Grid.SetRow(plotBorder, index);
+                Grid.SetColumn(plotBorder, 1);
+                SensorGrid.Children.Add(plotBorder);
             }
         }
 

@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RocketProfiler.UI.Views"
         mc:Ignorable="d"
-        WindowState="Maximized"
-        Title="RocketProfiler" Height="600" Width="800">
-    <Grid>
+        WindowState="Normal"
+        Title="RocketProfiler" Height="630" Width="1180">
+    <Grid Background="#FF9DCBFA">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition />
@@ -16,12 +16,12 @@
         <Grid.RowDefinitions>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Border Grid.Column="0" Grid.Row="0" Background="White" BorderBrush="LightGray" BorderThickness="0,0,1,0">
+        <Border Grid.Column="0" Grid.Row="0" Background="#FF9DCBFA" BorderBrush="LightGray" BorderThickness="0,0,3,0">
             <StackPanel Margin="5">
-                <Border Height="1" BorderBrush="LightGray" BorderThickness="1" Margin="0,5,0,0" />
-                <Label FontSize="14">Local Sessions</Label>
-                
-                <Button Click="CurrentRun_Click" Margin="10,5,5,5" FontSize="12" Background="Transparent">
+                <Border Height="3" BorderBrush="LightGray" BorderThickness="3" Margin="0,5,0,0" />
+                <Label FontSize="14" HorizontalAlignment="Center">Local Sessions</Label>
+
+                <Button Click="CurrentRun_Click" Margin="10,5,5,5" FontSize="12" Background="#FFDDDDDD">
                     <Grid Width="160">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <Image Source="/RocketProfiler.UI;component/Images/Rocket.ico" />
@@ -30,7 +30,7 @@
                     </Grid>
                 </Button>
 
-                <Button Click="OpenSession_Click" Margin="10,5,5,5" FontSize="12" Background="Transparent">
+                <Button Click="OpenSession_Click" Margin="10,5,5,5" FontSize="12" Background="#FFDDDDDD">
                     <Grid Width="160">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <Image Source="/RocketProfiler.UI;component/Images/Clipboard.ico" />
@@ -39,9 +39,10 @@
                     </Grid>
                 </Button>
                 
-                <Border Height="1" BorderBrush="LightGray" BorderThickness="1" Margin="0,5,0,0" />
-                <Label FontSize="14">Central Database</Label>
-                <Button Click="Upload_Click" Margin="10,5,5,5" FontSize="12" Background="Transparent">
+                <Border Height="3" BorderBrush="LightGray" BorderThickness="3" Margin="0,5,0,0" />
+                
+                <Label FontSize="14" HorizontalAlignment="Center">Central Database</Label>
+                <Button Click="Upload_Click" Margin="10,5,5,5" FontSize="12" Background="#FFDDDDDD">
                     <Grid Width="160">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <Image Source="/RocketProfiler.UI;component/Images/Radar.ico" />
@@ -49,7 +50,7 @@
                         </StackPanel>
                     </Grid>
                 </Button>
-                <Button Click="OpenRemoteSession_Click" Margin="10,5,5,5" FontSize="12" Background="Transparent">
+                <Button Click="OpenRemoteSession_Click" Margin="10,5,5,5" FontSize="12" Background="#FFDDDDDD">
                     <Grid Width="160">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <Image Source="/RocketProfiler.UI;component/Images/Bookmark.ico" />
@@ -57,6 +58,9 @@
                         </StackPanel>
                     </Grid>
                 </Button>
+
+                <Border Height="3" BorderBrush="LightGray" BorderThickness="3" Margin="0,5,0,0" />
+
             </StackPanel>
         </Border>
 
