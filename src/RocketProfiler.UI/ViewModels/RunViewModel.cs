@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Timers;
 using System.Windows;
@@ -17,6 +18,7 @@ namespace RocketProfiler.UI.ViewModels
 {
     public class RunViewModel : INotifyPropertyChanged
     {
+        private readonly IList<HistoryPlotViewModel> _plotViewModels;
         private readonly Timer _runTimer;
 
         public RunViewModel(IEnumerable<Sensor> sensors, RunController runController)
@@ -26,13 +28,15 @@ namespace RocketProfiler.UI.ViewModels
             SensorWidgets = new List<UserControl>();
             PlotWidgets = new List<Plot>();
 
+             _plotViewModels = new List<HistoryPlotViewModel>();
+
             foreach (var sensor in sensors)
             {
                 SensorWidgets.Add(
                     new TemperatureSensorWidget(
                         new TemperatureSensorWidgetViewModel(sensor)));
 
-                var plotViewModel = new SensorPlotWidgetViewModel(sensor, RunController);
+                var plotViewModel = new HistoryPlotViewModel(sensor.Info.Name);
 
                 var plot = new Plot();
                 plot.Axes.Add(new TimeSpanAxis
@@ -55,11 +59,12 @@ namespace RocketProfiler.UI.ViewModels
                         }
                     };
 
+                _plotViewModels.Add(plotViewModel);
                 PlotWidgets.Add(plot);
             }
 
             _runTimer = new Timer(100);
-            _runTimer.Elapsed += (_, __) => { OnPropertyChanged(nameof(TimerText)); };
+            _runTimer.Elapsed += (_, __) => { RefreshDisplay(); };
         }
 
         public void StartRun(string runName, string runDescription)
@@ -101,6 +106,36 @@ namespace RocketProfiler.UI.ViewModels
             {
                 RunController.DatabaseName = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private void RefreshDisplay()
+        {
+            OnPropertyChanged(nameof(TimerText));
+
+            if (RunController.CurrentRun != null)
+            {
+                DateTime startTime;
+                IEnumerable<IGrouping<string, SensorValue>> dataSeries;
+
+                lock (RunController.Lock)
+                {
+                    startTime = RunController.CurrentRun.StartTime;
+
+                    dataSeries = RunController
+                        .CurrentRun
+                        .Snapshots
+                        .SelectMany(s => s.SensorValues)
+                        .GroupBy(s => s.SensorInfo.Name)
+                        .ToList();
+                }
+
+                foreach (var sensorData in dataSeries)
+                {
+                    var viewModel = _plotViewModels.Single(p => p.SensorName == sensorData.Key);
+
+                    viewModel.UpdatePlot(startTime, sensorData);
+                }
             }
         }
 

@@ -73,7 +73,6 @@
     </ApplicationDefinition>
     <Compile Include="ViewModels\HistoryPlotViewModel.cs" />
     <Compile Include="ViewModels\RunViewModel.cs" />
-    <Compile Include="ViewModels\SensorPlotWidgetViewModel.cs" />
     <Compile Include="ViewModels\SessionViewModel.cs" />
     <Compile Include="ViewModels\TemperatureSensorWidgetViewModel.cs" />
     <Compile Include="ViewModels\UploadViewModel.cs" />

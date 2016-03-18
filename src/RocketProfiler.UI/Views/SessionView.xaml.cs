@@ -20,6 +20,16 @@ namespace RocketProfiler.UI.Views
             DataContext = viewModel;
 
             _sessionViewModel = viewModel;
+
+            Loaded += SessionView_Loaded;
+        }
+
+        private void SessionView_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (RunsList.Items.Count > 0)
+            {
+                RunsList.SelectedIndex = 0;
+            }
         }
 
         public void CurrentRun_Changed(object sender, SelectionChangedEventArgs e)

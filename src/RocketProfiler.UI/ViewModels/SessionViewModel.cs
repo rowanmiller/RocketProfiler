@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using OxyPlot.Axes;
@@ -15,8 +14,6 @@ namespace RocketProfiler.UI.ViewModels
 {
     public class SessionViewModel : INotifyPropertyChanged
     {
-        private readonly List<HistoryPlotViewModel> _plotViewModels = new List<HistoryPlotViewModel>();
-
         public SessionViewModel(RunRepository runRepository, string title)
         {
             Title = title;
@@ -38,13 +35,13 @@ namespace RocketProfiler.UI.ViewModels
 
                 var dataSeries = value.Snapshots
                     .SelectMany(s => s.SensorValues)
-                    .GroupBy(s => s.SensorInfo);
+                    .GroupBy(s => s.SensorInfo.Name);
 
                 PlotWidgets = new List<Plot>();
                 foreach (var sensorData in dataSeries)
                 {
-                    var plotViewModel = new HistoryPlotViewModel(value, sensorData);
-                    var plot = new Plot { Title = sensorData.Key.Name};
+                    var plotViewModel = new HistoryPlotViewModel(sensorData.Key);
+                    var plot = new Plot { Title = sensorData.Key};
 
                     plot.Axes.Add(new TimeSpanAxis
                     {
@@ -67,7 +64,8 @@ namespace RocketProfiler.UI.ViewModels
                         }
                     };
 
-                    _plotViewModels.Add(plotViewModel);
+                    plotViewModel.UpdatePlot(value.StartTime, sensorData);
+
                     PlotWidgets.Add(plot);
                 }
             }

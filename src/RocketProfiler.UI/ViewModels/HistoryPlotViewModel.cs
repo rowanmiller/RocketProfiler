@@ -1,5 +1,6 @@
 ﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,21 +15,28 @@ namespace RocketProfiler.UI.ViewModels
     {
         private readonly List<DataPoint> _dataPoints = new List<DataPoint>();
 
-        public HistoryPlotViewModel(Run run, IEnumerable<SensorValue> sensorValues)
+        public HistoryPlotViewModel(string sensorName)
         {
-            var startTime = run.StartTime;
+            SensorName = sensorName;
+        }
+
+        public void UpdatePlot(DateTime startTime, IEnumerable<SensorValue> sensorValues)
+        {
+            _dataPoints.Clear();
 
             _dataPoints.AddRange(
                 sensorValues
-                    .Where(v => v.Value.HasValue)
-                    .OrderBy(v => v.Timestamp)
-                    .Select(v =>
-                        new DataPoint(
-                            TimeSpanAxis.ToDouble(v.Timestamp - startTime),
-                            v.Value.Value)));
+                .Where(v => v.Value.HasValue)
+                .OrderBy(v => v.Timestamp)
+                .Select(v =>
+                    new DataPoint(
+                        TimeSpanAxis.ToDouble(v.Timestamp - startTime),
+                        v.Value.Value)));
 
             OnPropertyChanged(nameof(DataPoints));
         }
+
+        public string SensorName { get; }
 
         public IList<DataPoint> DataPoints => _dataPoints;
 
