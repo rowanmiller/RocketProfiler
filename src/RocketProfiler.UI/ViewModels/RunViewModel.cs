@@ -53,7 +53,7 @@ namespace RocketProfiler.UI.ViewModels
                 plot.Series.Add(
                     new LineSeries
                     {
-                        ItemsSource = plotViewModel.MaxValues,
+                        ItemsSource = plotViewModel.ThresholdValues,
                         Color = (Color)ColorConverter.ConvertFromString("Red")
                     });
 

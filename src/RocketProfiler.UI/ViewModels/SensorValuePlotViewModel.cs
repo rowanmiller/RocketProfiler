@@ -15,19 +15,19 @@ namespace RocketProfiler.UI.ViewModels
     {
         private static readonly TimeSpan _minimumDuration = TimeSpan.FromMinutes(2.0);
 
+        private readonly SensorInfo _sensorInfo;
         private readonly List<DataPoint> _dataPoints = new List<DataPoint>();
-        private readonly List<DataPoint> _maxDataPoints = new List<DataPoint>();
+        private readonly List<DataPoint> _thresholdDataPoints = new List<DataPoint>();
 
         public SensorValuePlotViewModel(SensorInfo sensorInfo)
         {
-            SensorName = sensorInfo.Name;
-            MaxValue = sensorInfo.MaxValue;
+            _sensorInfo = sensorInfo;
         }
 
         public void UpdatePlot(IEnumerable<SensorValue> sensorValues)
         {
             _dataPoints.Clear();
-            _maxDataPoints.Clear();
+            _thresholdDataPoints.Clear();
 
             var sortedValues = sensorValues
                 .Where(v => v.Value.HasValue)
@@ -44,12 +44,12 @@ namespace RocketProfiler.UI.ViewModels
 
             var duration = sortedValues.LastOrDefault()?.Timestamp - startTime;
 
-            _maxDataPoints.Add(
+            _thresholdDataPoints.Add(
                 new DataPoint(
                     0.0,
-                    MaxValue));
+                    Threshold));
 
-            _maxDataPoints.Add(
+            _thresholdDataPoints.Add(
                 new DataPoint(
                     TimeSpanAxis.ToDouble(
                         duration == null
@@ -57,19 +57,19 @@ namespace RocketProfiler.UI.ViewModels
                             : duration > _minimumDuration
                                 ? duration
                                 : _minimumDuration),
-                    MaxValue));
+                    Threshold));
 
             OnPropertyChanged(nameof(DataPoints));
-            OnPropertyChanged(nameof(MaxValues));
+            OnPropertyChanged(nameof(ThresholdValues));
         }
 
-        public string SensorName { get; }
+        public string SensorName => _sensorInfo.Name;
 
-        public double MaxValue { get; }
+        public double Threshold => _sensorInfo.Threshold;
 
         public IList<DataPoint> DataPoints => _dataPoints;
 
-        public IList<DataPoint> MaxValues => _maxDataPoints;
+        public IList<DataPoint> ThresholdValues => _thresholdDataPoints;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

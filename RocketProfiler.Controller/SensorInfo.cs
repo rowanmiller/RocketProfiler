@@ -11,6 +11,8 @@ namespace RocketProfiler.Controller
         public string Units { get; set; }
         public double MaxValue { get; set; }
 
+        public double Threshold => 200;
+
         // Because Sqlite Migrations can't drop the column and it is non-nullable
         [Required]
         public string Discriminator { get; set; } = "";
