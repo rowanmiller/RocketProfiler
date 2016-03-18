@@ -24,7 +24,7 @@ namespace RocketProfiler.UI.ViewModels
             MaxValue = sensorInfo.MaxValue;
         }
 
-        public void UpdatePlot(DateTime startTime, IEnumerable<SensorValue> sensorValues)
+        public void UpdatePlot(IEnumerable<SensorValue> sensorValues)
         {
             _dataPoints.Clear();
             _maxDataPoints.Clear();
@@ -33,6 +33,8 @@ namespace RocketProfiler.UI.ViewModels
                 .Where(v => v.Value.HasValue)
                 .OrderBy(v => v.Timestamp)
                 .ToList();
+
+            var startTime = sortedValues.First().Timestamp;
 
             _dataPoints.AddRange(
                 sortedValues.Select(v =>

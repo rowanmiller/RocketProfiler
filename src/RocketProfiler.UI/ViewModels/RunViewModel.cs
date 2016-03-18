@@ -122,13 +122,10 @@ namespace RocketProfiler.UI.ViewModels
 
             if (RunController.CurrentRun != null)
             {
-                DateTime startTime;
                 IEnumerable<IGrouping<string, SensorValue>> dataSeries;
 
                 lock (RunController.Lock)
                 {
-                    startTime = RunController.CurrentRun.StartTime;
-
                     dataSeries = RunController
                         .CurrentRun
                         .Snapshots
@@ -141,7 +138,7 @@ namespace RocketProfiler.UI.ViewModels
                 {
                     var viewModel = _plotViewModels.Single(p => p.SensorName == sensorData.Key);
 
-                    viewModel.UpdatePlot(startTime, sensorData);
+                    viewModel.UpdatePlot(sensorData);
                 }
             }
         }

@@ -72,7 +72,7 @@ namespace RocketProfiler.UI.ViewModels
                         }
                     };
 
-                    plotViewModel.UpdatePlot(value.StartTime, sensorData);
+                    plotViewModel.UpdatePlot(sensorData);
 
                     PlotWidgets.Add(plot);
                 }
