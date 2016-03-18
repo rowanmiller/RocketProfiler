@@ -13,7 +13,8 @@ namespace RocketProfiler.Test
 {
     public class ControllerTest
     {
-        private const string LocalDbConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=RocketProfilerTest";
+        private readonly string _localDbConnectionString 
+            = SqlServerRunRepository.GetLocalDbConnectionString("RocketProfilerTest");
 
         [Fact]
         public void RunController_forces_sensor_reads_and_sets_current_value()
@@ -151,11 +152,11 @@ namespace RocketProfiler.Test
 
         [Fact]
         public void Can_upload_a_run_to_LocalDb() 
-            => Can_upload_a_run_to_SQL_Server(LocalDbConnectionString);
+            => Can_upload_a_run_to_SQL_Server(_localDbConnectionString);
 
         [Fact]
         public void Can_upload_a_run_to_Azure() 
-            => Can_upload_a_run_to_SQL_Server(SqlServerRunRepository.BuildAzureConnectionString("TestDatabase"));
+            => Can_upload_a_run_to_SQL_Server(SqlServerRunRepository.GetAvailableDbConnectionString("TestDatabase"));
 
         private void Can_upload_a_run_to_SQL_Server(string connectionString)
         {
