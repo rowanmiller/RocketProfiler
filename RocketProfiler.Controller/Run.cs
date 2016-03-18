@@ -15,6 +15,9 @@ namespace RocketProfiler.Controller
         public DateTime EndTime { get; set; }
         public IList<Snapshot> Snapshots { get; private set; } = new List<Snapshot>();
 
+        public DateTime StartTimeLocal => StartTime.ToLocalTime();
+        public DateTime EndTimeLocal => EndTime.ToLocalTime();
+
         public Run Clone(IDictionary<int, SensorInfo> clonedSensors)
         {
             var clone = new Run

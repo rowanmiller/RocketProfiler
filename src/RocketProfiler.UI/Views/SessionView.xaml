@@ -32,17 +32,17 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Start Time" Width="150" IsReadOnly="True">
+                        <DataGridTemplateColumn Header="Start Time (UTC-7)" Width="150" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding StartTime}"></TextBlock>
+                                    <TextBlock Text="{Binding StartTimeLocal}"></TextBlock>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="End Time" Width="150" IsReadOnly="True">
+                        <DataGridTemplateColumn Header="End Time (UTC-7)" Width="150" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding EndTime}"> </TextBlock>
+                                    <TextBlock Text="{Binding EndTimeLocal}"> </TextBlock>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
