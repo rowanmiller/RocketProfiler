@@ -39,6 +39,11 @@ namespace RocketProfiler.UI.ViewModels
                 item.ViewModel.Restart();
             }
 
+            foreach (var step in ControlSteps)
+            {
+                step.Reset();
+            }
+
             _runController.Start(runName, runDescription);
         }
 

@@ -20,7 +20,8 @@ namespace RocketProfiler.UI.Views
             Series.Add(
                 new LineSeries
                 {
-                    ItemsSource = viewModel.DataPoints
+                    ItemsSource = viewModel.DataPoints,
+                    Color = (Color)ColorConverter.ConvertFromString("Black")
                 });
 
             Series.Add(

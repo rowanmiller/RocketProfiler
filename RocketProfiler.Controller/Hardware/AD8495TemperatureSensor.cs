@@ -11,6 +11,7 @@ namespace RocketProfiler.Controller.Hardware
     public class AD8495TemperatureSensor : Sensor
     {
         private readonly int _pin;
+        private DateTime _lastRead;
 
         /// <summary>
         ///     Initializes a new instance of the AD8495TemperatureSensor class.
@@ -27,7 +28,16 @@ namespace RocketProfiler.Controller.Hardware
         {
             _pin = pin;
 
-            gpioModule.QueueRepeatingWork(g => RaiseSampleEvent(ReadValue(g)));
+            gpioModule.QueueRepeatingWork(g =>
+            {
+                // Throttle the frequency at which reads are done 
+                // Only to prevent data explosion and UI flickering, hardware can handle it just fine
+                if (_lastRead == null || _lastRead.AddMilliseconds(200) <= DateTime.UtcNow)
+                {
+                    RaiseSampleEvent(ReadValue(g));
+                    _lastRead = DateTime.UtcNow;
+                }
+            });
         }
 
         public SensorReadEventArgs ReadValue(GpioModule gpioModule)

@@ -21,6 +21,7 @@ namespace RocketProfiler.UI.Views
             InitializeComponent();
 
             _runView = new Lazy<RunView>(() => new RunView(runViewModel));
+            DocumentFrame.Navigate(_runView.Value);
         }
 
         private void CurrentRun_Click(object sender, RoutedEventArgs e)

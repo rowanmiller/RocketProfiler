@@ -4,81 +4,124 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Rocket Profiler" >
+        Title="Rocket Profiler"
+        Background="Gray">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="160"  />
-            <RowDefinition />
-        </Grid.RowDefinitions>
 
-        <Grid Background="Gray">
-
-            <StackPanel Grid.Row="0" Orientation="Horizontal"  HorizontalAlignment="Left" VerticalAlignment="Top">
-
-                <Grid Name="Inputs" Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="200" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30" />
-                        <RowDefinition  />
-                    </Grid.RowDefinitions>
-
-
-                    <Label Grid.Row="0" Grid.Column="0" Foreground="Black" FontSize="16">Run Name</Label>
-                    <TextBox Grid.Row="0" Grid.Column="1" Name="RunName" FontSize="16" />
-                    <Label Grid.Row="1" Grid.Column="0" Foreground="Black" FontSize="16">Description</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Name="RunDescription" FontSize="16" AcceptsReturn="True" />
-
-
-                </Grid>
-
-                <StackPanel Orientation="Vertical" Margin="5">
-                    <Button Width="200" Height="75" Background="Green" Name="StartButton" Click="StartButton_Click" FontSize="16" BorderBrush="Black" BorderThickness="2">
-                        Start Run
-                    </Button>
-                    <Button Width="200" Height="75" Background="OrangeRed" Name="StopButton" Click="StopButton_Click" IsEnabled="False" FontSize="16" BorderBrush="Black" BorderThickness="2">
-                        Stop Run
-                    </Button>
-                </StackPanel>
-
-                <Border BorderThickness="1" BorderBrush="Black" Margin="5" Height="150" Background="White" Width="360">
-                    <TextBlock Margin="5" VerticalAlignment="Center" Text="{Binding TimerText, Mode=OneWay}" Background="White" Foreground="Green" FontSize="90" FontFamily="Impact"/>
-                </Border>
-            </StackPanel>
-        </Grid>
-
-        <Grid Grid.Row="1">
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="310"/>
+                <ColumnDefinition Width="340"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
-                <TextBlock Margin="5" FontSize="20">Control Steps</TextBlock>
-                <ListView Margin="5" ItemsSource="{Binding ControlSteps}" >
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Step.Name}" FontSize="18" />
-                                <TextBlock Text="{Binding Status}" Margin="0,0,0,5" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackPanel>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-            <StackPanel Margin="5" Grid.Column="1">
-                <TextBlock Margin="5" FontSize="20">Monitoring</TextBlock>
-                <Border Width="940" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Grid Name="SensorGrid">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Name="Inputs" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition  />
+                    </Grid.RowDefinitions>
+
+                    <Grid Background="White" Grid.Row="0">
+                        <TextBox  Name="RunName" FontSize="16">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                                    <Style.Resources>
+                                        <VisualBrush x:Key="HintStyle" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                            <VisualBrush.Visual>
+                                                <Label Content="run name" Foreground="Gray" />
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Style.Resources>
+                                    <Style.Triggers>
+                                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                            <Setter Property="Background" Value="{StaticResource HintStyle}" />
+                                        </Trigger>
+                                        <Trigger Property="Text" Value="{x:Null}">
+                                            <Setter Property="Background" Value="{StaticResource HintStyle}" />
+                                        </Trigger>
+                                        <Trigger Property="IsKeyboardFocused" Value="True">
+                                            <Setter Property="Background" Value="White" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
                     </Grid>
+
+                    <Grid Background="White" Grid.Row="1">
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="RunDescription" FontSize="16">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                                    <Style.Resources>
+                                        <VisualBrush x:Key="HintStyle" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                            <VisualBrush.Visual>
+                                                <Label VerticalAlignment="Top" Content="run description" Foreground="Gray" />
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Style.Resources>
+                                    <Style.Triggers>
+                                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                            <Setter Property="Background" Value="{StaticResource HintStyle}" />
+                                        </Trigger>
+                                        <Trigger Property="Text" Value="{x:Null}">
+                                            <Setter Property="Background" Value="{StaticResource HintStyle}" />
+                                        </Trigger>
+                                        <Trigger Property="IsKeyboardFocused" Value="True">
+                                            <Setter Property="Background" Value="White" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Background="Green" Name="StartButton" Click="StartButton_Click" FontSize="30" BorderBrush="Black" BorderThickness="2">
+                        Start
+                    </Button>
+                    <Button Grid.Column="1" Background="OrangeRed" Name="StopButton" Click="StopButton_Click" IsEnabled="False" FontSize="30" BorderBrush="Black" BorderThickness="2">
+                        Stop
+                    </Button>
+                </Grid>
+
+                <Border Grid.Row="2" BorderThickness="1" BorderBrush="Black" Margin="5" Background="White">
+                    <TextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding TimerText, Mode=OneWay}" FontSize="80" FontFamily="Impact"/>
                 </Border>
+
+                <Grid Grid.Row="3">
+                    <ListView Background="DarkGray" Margin="5" ItemsSource="{Binding ControlSteps}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Step.Name}" FontSize="18" />
+                                    <TextBlock Text="{Binding Status}" Margin="0,0,0,5" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Grid>
+
+            <StackPanel Grid.Column="1" Margin="5" Background="White">
+                <Grid  Name="SensorGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                </Grid>
             </StackPanel>
         </Grid>
 

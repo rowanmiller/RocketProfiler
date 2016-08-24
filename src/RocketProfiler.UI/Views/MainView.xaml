@@ -9,7 +9,7 @@
         Title="RocketProfiler" Height="830" Width="1400">
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="0" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
@@ -25,7 +25,7 @@
                     <Grid Width="160">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <Image Source="/RocketProfiler.UI;component/Images/Rocket.ico" />
-                            <TextBlock Margin="5,0" HorizontalAlignment="Center">Current Session</TextBlock>
+                            <TextBlock Margin="5,0" HorizontalAlignment="Center">Run...</TextBlock>
                         </StackPanel>
                     </Grid>
                 </Button>

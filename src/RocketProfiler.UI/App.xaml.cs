@@ -33,7 +33,7 @@ namespace RocketProfiler.UI
                 new ControlStep("Oxidizer On", () => oxidizerValve.TurnOn()),
                 new ControlStep("Oxidizer Build Up (1 sec)", () => Thread.Sleep(1000)),
                 new ControlStep("Igniter On ", () => igniter.TurnOn()),
-                new ControlStep("Ignition (2 sec)", () => Thread.Sleep(1000)),
+                new ControlStep("Ignition (2 sec)", () => Thread.Sleep(2000)),
                 new ControlStep("Igniter Off ", () => igniter.TurnOff()),
                 new ControlStep("Main Burn (10 sec)", () => Thread.Sleep(10000)),
                 new ControlStep("Oxidizer Off", () => oxidizerValve.TurnOff()),
@@ -49,8 +49,8 @@ namespace RocketProfiler.UI
             thread.Start();
             Exit += (_, __) => thread.Abort();
 
-            var temp1 = new AD8495TemperatureSensor("Oxidizer Inlet Temp", 30, numato, 0);
-            var temp2 = new MAX6675TemperatureSensor("Lower Engine Temp", 25, numato, 1, 2, 3);
+            var temp1 = new AD8495TemperatureSensor("Oxidizer Inlet Temp", 220 /* Rated temp of silicone hose */, numato, 0);
+            var temp2 = new MAX6675TemperatureSensor("Lower Engine Temp", 900, numato, 1, 2, 3);
 
             var sensors = new List<ActiveSensor>
             {

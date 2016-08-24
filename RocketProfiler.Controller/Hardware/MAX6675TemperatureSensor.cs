@@ -13,6 +13,7 @@ namespace RocketProfiler.Controller.Hardware
         private readonly int _clockPin;
         private readonly int _chipSelectPin;
         private readonly int _dataOutputPin;
+        private DateTime _lastRead;
 
         /// <summary>
         ///     Initializes a new instance of the AD8495TemperatureSensor class.
@@ -34,13 +35,21 @@ namespace RocketProfiler.Controller.Hardware
         ///     Pin is labeled 90 on hardware.
         /// </param>
         public MAX6675TemperatureSensor(string title, double threshold, GpioModule gpioModule, int clockPin, int chipSelectPin, int dataOutputPin)
-            :base(title: title, units: "°C", minValue: 0, maxValue: 1024, threshold: threshold)
+            : base(title: title, units: "°C", minValue: 0, maxValue: 1024, threshold: threshold)
         {
             _clockPin = clockPin;
             _chipSelectPin = chipSelectPin;
             _dataOutputPin = dataOutputPin;
 
-            gpioModule.QueueRepeatingWork(g => RaiseSampleEvent(ReadValue(g)));
+            gpioModule.QueueRepeatingWork(g =>
+            {
+                // Module will get locked up and return the same temp every time if read too often
+                if (_lastRead == null || _lastRead.AddMilliseconds(500) <= DateTime.UtcNow)
+                {
+                    RaiseSampleEvent(ReadValue(g));
+                    _lastRead = DateTime.UtcNow;
+                }
+            });
         }
 
         public SensorReadEventArgs ReadValue(GpioModule gpioModule)

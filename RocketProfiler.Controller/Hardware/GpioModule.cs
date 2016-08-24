@@ -52,9 +52,6 @@ namespace RocketProfiler.Controller.Hardware
                 {
                     work(this);
                 }
-
-                // TODO Move to MAX6675 module as it doesn't handle super regular reads
-                Thread.Sleep(500);
             }
         }
     }

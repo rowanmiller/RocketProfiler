@@ -35,17 +35,28 @@ namespace RocketProfiler.UI.ViewModels
         public DateTime Completed { get; set; }
         public bool IsStarted { get; private set; }
         public bool IsCompleted { get; private set; }
+
         public string Status
         {
             get
             {
                 return IsCompleted
-                    ? $"Complete: {Completed.ToLocalTime().ToShortTimeString()}"
+                    ? $"Complete: {Completed.ToLocalTime().ToLongTimeString()}"
                     : IsStarted
                         ? "In Progress"
                         : "Not Started";
             }
 
+        }
+
+        public void Reset()
+        {
+            IsStarted = false;
+            IsCompleted = false;
+
+            OnPropertyChanged(nameof(Completed));
+            OnPropertyChanged(nameof(IsCompleted));
+            OnPropertyChanged(nameof(Status));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
