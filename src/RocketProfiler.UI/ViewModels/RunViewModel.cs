@@ -1,145 +1,70 @@
 ﻿// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using RocketProfiler.Controller;
+using RocketProfiler.UI.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Timers;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using OxyPlot.Axes;
-using OxyPlot.Wpf;
-using RocketProfiler.Controller;
-using RocketProfiler.UI.Views;
-using TimeSpanAxis = OxyPlot.Wpf.TimeSpanAxis;
 
 namespace RocketProfiler.UI.ViewModels
 {
     public class RunViewModel : INotifyPropertyChanged
     {
-        private readonly IList<SensorValuePlotViewModel> _plotViewModels;
-        private readonly Timer _runTimer;
+        private readonly RunController _runController;
+        private readonly IEnumerable<ActiveSensor> _activeSensors;
 
-        public RunViewModel(IEnumerable<Sensor> sensors, RunController runController)
+        public RunViewModel(IEnumerable<ControlStep> controlSteps, IEnumerable<ControlStep> abortSteps, IEnumerable<ActiveSensor> activeSensors)
         {
-            RunController = runController;
+            _runController = new RunController(controlSteps, abortSteps, activeSensors.Select(s => s.Sensor));
+            _activeSensors = activeSensors;
 
-            SensorWidgets = new List<UserControl>();
-            PlotWidgets = new List<Plot>();
+            ControlSteps = controlSteps.Select(s => new ControlStepViewModel(s)).ToList();
 
-             _plotViewModels = new List<SensorValuePlotViewModel>();
-
-            foreach (var sensor in sensors)
+            var timer = new Timer(100);
+            timer.Elapsed += (_, __) =>
             {
-                SensorWidgets.Add(
-                    new TemperatureSensorWidget(
-                        new TemperatureSensorWidgetViewModel(sensor)));
-
-                var plotViewModel = new SensorValuePlotViewModel(sensor.Info);
-
-                var plot = new Plot();
-                plot.Axes.Add(new TimeSpanAxis
-                {
-                    Position = AxisPosition.Bottom,
-                    StringFormat = "mm:ss"
-                });
-                plot.Series.Add(
-                    new LineSeries
-                    {
-                        ItemsSource = plotViewModel.DataPoints
-                    });
-                plot.Series.Add(
-                    new LineSeries
-                    {
-                        ItemsSource = plotViewModel.ThresholdValues,
-                        Color = (Color)ColorConverter.ConvertFromString("Red")
-                    });
-
-                plotViewModel.PropertyChanged += (sender, args) =>
-                    {
-                        if (args.PropertyName == "DataPoints")
-                        {
-                            Application.Current.Dispatcher.InvokeAsync(() =>
-                                plot.InvalidatePlot());
-                        }
-                    };
-
-                _plotViewModels.Add(plotViewModel);
-                PlotWidgets.Add(plot);
-            }
-
-            _runTimer = new Timer(100);
-            _runTimer.Elapsed += (_, __) => { RefreshDisplay(); };
+                OnPropertyChanged(nameof(TimerText));
+            };
+            timer.Start();
         }
 
         public void StartRun(string runName, string runDescription)
         {
-            RunController.StartRecoding(runName, runDescription);
-            _runTimer.Start();
+            foreach (var item in PlotWidgets)
+            {
+                item.ViewModel.Restart();
+            }
+
+            _runController.Start(runName, runDescription);
         }
 
         public void StopRun()
         {
-            RunController.StopRecording();
-            RunController.PersistRuns();
-            _runTimer.Stop();
+            _runController.Stop();
+
+            foreach (var item in PlotWidgets)
+            {
+                item.ViewModel.Restart();
+            }
         }
 
-        public RunController RunController { get; }
+        public IEnumerable<UserControl> SensorWidgets => _activeSensors.Select(s => s.StatusView);
 
-        public IList<UserControl> SensorWidgets { get; }
+        public IEnumerable<PlotView> PlotWidgets => _activeSensors.Select(s => s.PlotView);
 
-        public IList<Plot> PlotWidgets { get; }
+        public IEnumerable<ControlStepViewModel> ControlSteps { get; } 
 
         public string TimerText
         {
             get
             {
-                lock (RunController.Lock)
-                {
-                    return RunController.CurrentRun == null
-                        ? "0:00:00.0"
-                        : (DateTime.UtcNow - RunController.CurrentRun.StartTime).ToString("g").Substring(0, 9);
-                }
-            }
-        }
-
-        public string SessionFilePath
-        {
-            get { return RunController.DatabaseName; }
-            set
-            {
-                RunController.DatabaseName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private void RefreshDisplay()
-        {
-            OnPropertyChanged(nameof(TimerText));
-
-            if (RunController.CurrentRun != null)
-            {
-                IEnumerable<IGrouping<string, SensorValue>> dataSeries;
-
-                lock (RunController.Lock)
-                {
-                    dataSeries = RunController
-                        .CurrentRun
-                        .Snapshots
-                        .SelectMany(s => s.SensorValues)
-                        .GroupBy(s => s.SensorInfo.Name)
-                        .ToList();
-                }
-
-                foreach (var sensorData in dataSeries)
-                {
-                    var viewModel = _plotViewModels.Single(p => p.SensorName == sensorData.Key);
-
-                    viewModel.UpdatePlot(sensorData);
-                }
+                return _runController.CurrentRun == null
+                    ? "0:00:00.0"
+                    : (DateTime.UtcNow - _runController.CurrentRun.StartTime).ToString("g").Substring(0, 9);
             }
         }
 

@@ -35,33 +35,33 @@ namespace RocketProfiler.UI.Views
 
         public void CurrentRun_Changed(object sender, SelectionChangedEventArgs e)
         {
-            _sessionViewModel.CurrentRun = (Run)RunsGrid.SelectedItem;
+            //_sessionViewModel.CurrentRun = (Run)RunsGrid.SelectedItem;
 
-            for (var index = 0; index < _sessionViewModel.PlotWidgets.Count; index++)
-            {
-                SensorGrid.RowDefinitions.Add(new RowDefinition
-                {
-                    Height = new GridLength(300)
-                });
+            //for (var index = 0; index < _sessionViewModel.PlotWidgets.Count; index++)
+            //{
+            //    SensorGrid.RowDefinitions.Add(new RowDefinition
+            //    {
+            //        Height = new GridLength(300)
+            //    });
 
-                var plotWidget = _sessionViewModel.PlotWidgets[index];
-                plotWidget.Padding = new Thickness(20);
+            //    var plotWidget = _sessionViewModel.PlotWidgets[index];
+            //    plotWidget.Padding = new Thickness(20);
 
-                var plotBorder = new Border
-                {
-                    Padding = new Thickness(3),
-                    Child = new Border
-                    {
-                        BorderThickness = new Thickness(1),
-                        BorderBrush = Brushes.Black,
-                        Child = plotWidget
-                    }
-                };
+            //    var plotBorder = new Border
+            //    {
+            //        Padding = new Thickness(3),
+            //        Child = new Border
+            //        {
+            //            BorderThickness = new Thickness(1),
+            //            BorderBrush = Brushes.Black,
+            //            Child = plotWidget
+            //        }
+            //    };
                 
-                Grid.SetRow(plotBorder, index);
-                Grid.SetColumn(plotBorder, 1);
-                SensorGrid.Children.Add(plotBorder);
-            }
+            //    Grid.SetRow(plotBorder, index);
+            //    Grid.SetColumn(plotBorder, 1);
+            //    SensorGrid.Children.Add(plotBorder);
+            //}
         }
     }
 }

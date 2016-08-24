@@ -149,41 +149,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AD8495TemperatureSensor.cs" />
-    <Compile Include="ErrorSensorValue.cs" />
-    <Compile Include="MAX6675TemperatureSensor.cs" />
-    <Compile Include="Migrations\20160317175455_InitialSchema.cs" />
-    <Compile Include="Migrations\20160317175455_InitialSchema.designer.cs">
-      <DependentUpon>20160317175455_InitialSchema.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20160317195629_UseSensorInfo.cs" />
-    <Compile Include="Migrations\20160317195629_UseSensorInfo.designer.cs">
-      <DependentUpon>20160317195629_UseSensorInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\RocketProfilerContextModelSnapshot.cs" />
-    <Compile Include="Migrations\RocketProfilerSqlServer\20160317215805_InitialMigration.cs" />
-    <Compile Include="Migrations\RocketProfilerSqlServer\20160317215805_InitialMigration.designer.cs">
-      <DependentUpon>20160317215805_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\RocketProfilerSqlServer\RocketProfilerSqlServerContextModelSnapshot.cs" />
-    <Compile Include="NumatoExtensions.cs" />
+    <Compile Include="ControlStep.cs" />
+    <Compile Include="DataAccess\RunSensor.cs" />
+    <Compile Include="DataAccess\SensorValue.cs" />
+    <Compile Include="Hardware\AD8495TemperatureSensor.cs" />
+    <Compile Include="Hardware\GpioModule.cs" />
+    <Compile Include="Hardware\GpioRelay.cs" />
+    <Compile Include="Hardware\MAX6675TemperatureSensor.cs" />
+    <Compile Include="Hardware\NumatoGpioModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RocketProfilerContext.cs" />
-    <Compile Include="RocketProfilerSqliteContext.cs" />
-    <Compile Include="RocketProfilerContextDesignTimeFactory.cs" />
-    <Compile Include="RocketProfilerSqlServerContext.cs" />
-    <Compile Include="Run.cs" />
+    <Compile Include="DataAccess\RocketProfilerContext.cs" />
+    <Compile Include="DataAccess\RocketProfilerContextDesignTimeFactory.cs" />
+    <Compile Include="DataAccess\Run.cs" />
     <Compile Include="RunController.cs" />
-    <Compile Include="Runner.cs" />
-    <Compile Include="RunRepository.cs" />
-    <Compile Include="Sensor.cs" />
-    <Compile Include="SensorInfo.cs" />
-    <Compile Include="SensorValue.cs" />
-    <Compile Include="Snapshot.cs" />
-    <Compile Include="SqliteRunRepository.cs" />
-    <Compile Include="SqlServerRunRepository.cs" />
-    <Compile Include="TestSensors\RampingTemperatureSensor.cs" />
-    <Compile Include="TestSensors\TestTemeratureSensor.cs" />
+    <Compile Include="Hardware\Sensor.cs" />
+    <Compile Include="Hardware\SensorReadEventArgs.cs" />
+    <Compile Include="Hardware\TestSensors\RampingTemperatureSensor.cs" />
+    <Compile Include="Hardware\TestSensors\TestTemeratureSensor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

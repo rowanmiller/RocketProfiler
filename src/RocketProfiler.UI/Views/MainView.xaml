@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:RocketProfiler.UI.Views"
         mc:Ignorable="d"
         WindowState="Normal"
-        Title="RocketProfiler" Height="830" Width="1180">
-    <Grid Background="#FF9DCBFA">
+        Title="RocketProfiler" Height="830" Width="1400">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition />
@@ -39,26 +39,6 @@
                     </Grid>
                 </Button>
                 
-                <Border Height="3" BorderBrush="LightGray" BorderThickness="3" Margin="0,5,0,0" />
-
-                <Label FontSize="14" HorizontalAlignment="Center" Foreground="LightGray">Central Database</Label>
-                <Button Click="Upload_Click" Margin="10,5,5,5" FontSize="12" Background="#FFDDDDDD">
-                    <Grid Width="160">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                            <Image Source="/RocketProfiler.UI;component/Images/Radar.ico" />
-                            <TextBlock Margin="5,0" HorizontalAlignment="Center">Upload...</TextBlock>
-                        </StackPanel>
-                    </Grid>
-                </Button>
-                <Button Click="OpenRemoteSession_Click" Margin="10,5,5,5" FontSize="12" Background="#FFDDDDDD">
-                    <Grid Width="160">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                            <Image Source="/RocketProfiler.UI;component/Images/Bookmark.ico" />
-                            <TextBlock Margin="5,0" HorizontalAlignment="Center">Open</TextBlock>
-                        </StackPanel>
-                    </Grid>
-                </Button>
-
                 <Border Height="3" BorderBrush="LightGray" BorderThickness="3" Margin="0,5,0,0" />
 
             </StackPanel>

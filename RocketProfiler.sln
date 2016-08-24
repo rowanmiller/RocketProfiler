@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9F647914-F928-475C-B739-BD5B08C613D8}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CAB551FF-05BF-4359-957E-95E4038F6009}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketProfiler.Test", "RocketProfiler.Test\RocketProfiler.Test.csproj", "{930301A4-7B94-418A-BAC0-D6098D39FE27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketProfiler.Console", "src\RocketProfiler.Console\RocketProfiler.Console.csproj", "{D8C7DBE2-5BBB-4D4A-9D1E-91813BC05BCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{930301A4-7B94-418A-BAC0-D6098D39FE27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{930301A4-7B94-418A-BAC0-D6098D39FE27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{930301A4-7B94-418A-BAC0-D6098D39FE27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8C7DBE2-5BBB-4D4A-9D1E-91813BC05BCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8C7DBE2-5BBB-4D4A-9D1E-91813BC05BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8C7DBE2-5BBB-4D4A-9D1E-91813BC05BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8C7DBE2-5BBB-4D4A-9D1E-91813BC05BCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,5 +45,6 @@ Global
 		{799816F4-872F-4BB5-9522-946C6CD9FBDF} = {9F647914-F928-475C-B739-BD5B08C613D8}
 		{549DDEE1-78E5-4D35-A422-5D59F9E79CA7} = {9F647914-F928-475C-B739-BD5B08C613D8}
 		{930301A4-7B94-418A-BAC0-D6098D39FE27} = {CAB551FF-05BF-4359-957E-95E4038F6009}
+		{D8C7DBE2-5BBB-4D4A-9D1E-91813BC05BCD} = {9F647914-F928-475C-B739-BD5B08C613D8}
 	EndGlobalSection
 EndGlobal

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Win32;
 using RocketProfiler.UI.ViewModels;
+using System.Linq;
 
 namespace RocketProfiler.UI.Views
 {
@@ -13,26 +14,26 @@ namespace RocketProfiler.UI.Views
     /// </summary>
     public partial class RunView : Page
     {
-        private readonly RunViewModel _mainWindowViewModel;
+        private readonly RunViewModel _viewModel;
 
-        public RunView(RunViewModel mainWindowViewModel)
+        public RunView(RunViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = mainWindowViewModel;
+            DataContext = viewModel;
 
-            _mainWindowViewModel = mainWindowViewModel;
+            _viewModel = viewModel;
 
-            for (var index = 0; index < mainWindowViewModel.SensorWidgets.Count; index++)
+            for (var index = 0; index < viewModel.SensorWidgets.Count(); index++)
             {
                 SensorGrid.RowDefinitions.Add(new RowDefinition());
 
-                Grid.SetRow(mainWindowViewModel.SensorWidgets[index], index);
-                Grid.SetColumn(mainWindowViewModel.SensorWidgets[index], 0);
+                Grid.SetRow(viewModel.SensorWidgets.ElementAt(index), index);
+                Grid.SetColumn(viewModel.SensorWidgets.ElementAt(index), 0);
 
 
-                SensorGrid.Children.Add(mainWindowViewModel.SensorWidgets[index]);
+                SensorGrid.Children.Add(viewModel.SensorWidgets.ElementAt(index));
 
-                var plotWidget = mainWindowViewModel.PlotWidgets[index];
+                var plotWidget = viewModel.PlotWidgets.ElementAt(index);
                 plotWidget.Padding = new Thickness(20);
 
                 var plotBorder = new Border
@@ -54,7 +55,7 @@ namespace RocketProfiler.UI.Views
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            _mainWindowViewModel.StartRun(RunName.Text, RunDescription.Text);
+            _viewModel.StartRun(RunName.Text, RunDescription.Text);
             StartButton.IsEnabled = false;
             StopButton.IsEnabled = true;
             Inputs.IsEnabled = false;
@@ -62,7 +63,7 @@ namespace RocketProfiler.UI.Views
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            _mainWindowViewModel.StopRun();
+            _viewModel.StopRun();
             StartButton.IsEnabled = true;
             StopButton.IsEnabled = false;
             Inputs.IsEnabled = true;
@@ -81,7 +82,7 @@ namespace RocketProfiler.UI.Views
             if (result.HasValue
                 && result.Value)
             {
-                _mainWindowViewModel.SessionFilePath = dlg.FileName;
+               // _mainWindowViewModel.SessionFilePath = dlg.FileName;
             }
         }
     }
